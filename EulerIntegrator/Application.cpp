@@ -7,8 +7,7 @@
 #include "Textures.h"
 //include header of all existing modules
 
-Application::Application()
-{
+Application::Application() {
 
 	renderer = new ModuleRender(this);
 	window = new ModuleWindow(this);
