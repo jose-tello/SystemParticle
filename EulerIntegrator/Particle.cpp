@@ -1,5 +1,7 @@
 #include "Particle.h"
 #include "Textures.h"
+#include "Application.h"
+#include "Render.h"
 
 Particle::Particle() 
 {}
@@ -82,6 +84,19 @@ void Particle::Update(float dt) {
 
 	Move(dt);
 	CheckLife(dt);
+}
+
+
+void Particle::PostUpdate() {
+
+	Draw();
+}
+
+
+void Particle::Draw() {
+
+	
+
 }
 
 void Particle::Move(float dt) {

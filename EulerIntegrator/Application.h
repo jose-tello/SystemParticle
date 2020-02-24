@@ -14,6 +14,7 @@ class ModuleWindow;
 class ModuleInput;
 class ModuleScene;
 class ModuleTextures;
+class ModuleParticles;
 
 class Application
 {
@@ -24,6 +25,7 @@ public:
 	ModuleWindow* window;
 	ModuleScene* scene;
 	ModuleTextures* textures;
+	ModuleParticles* particles;
 
 	j1Timer* gameTimer = nullptr;
 	j1PerfTimer* gamePerfTimer = nullptr;

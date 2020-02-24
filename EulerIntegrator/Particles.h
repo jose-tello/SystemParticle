@@ -3,14 +3,16 @@
 #ifndef __MODULE_PARTICLES__
 #define __MODULE_PARTICLES__
 
+#include "Application.h"
+#include "Globals.h"
 #include "Module.h"
-#include "Particle.h"
+#include "Emiter.h"
 
-class ModulePartiles : public Module
+class ModuleParticles : public Module
 {
 public:
-	ModulePartiles(Application* app, bool start_enabled = true);
-	~ModulePartiles();
+	ModuleParticles(Application* app, bool start_enabled = true);
+	~ModuleParticles();
 
 	bool Start();
 	update_status PreUpdate();
@@ -18,7 +20,8 @@ public:
 	update_status PostUpdate();
 
 private:
-	vector<Particle> particleArray;
+	vector<Emiter> particleArray; 
+	
 };
 
 

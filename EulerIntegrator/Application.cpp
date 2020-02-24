@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Input.h"
 #include "Textures.h"
+#include "Particles.h"
 //include header of all existing modules
 
 Application::Application() {
@@ -14,6 +15,7 @@ Application::Application() {
 	input = new ModuleInput(this);
 	scene = new ModuleScene(this);
 	textures = new ModuleTextures(this);
+	particles = new ModuleParticles(this);
 
 	gameTimer = new j1Timer();
 	gamePerfTimer = new j1PerfTimer();
@@ -28,6 +30,7 @@ Application::Application() {
 	AddModule(input);
 	AddModule(textures);
 	AddModule(scene);
+	AddModule(particles);
 
 	//Renderer
 	AddModule(renderer);
@@ -47,7 +50,7 @@ bool Application::Init()
 	capTime = 60u;
 
 	// Call Init() in all modules
-	int num_modules = list_modules.capacity() - 1;
+	int num_modules = list_modules.capacity();
 
 	for (int i = 0; i < num_modules && ret == true; i++) {
 

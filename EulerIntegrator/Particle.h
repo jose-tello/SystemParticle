@@ -32,11 +32,12 @@ public:
 
 
 	void Update(float dt);
+	void PostUpdate();
 
 private:
 	void Move(float dt);
 	void CheckLife(float dt);
-	void Draw(float dt);
+	void Draw();
 
 private:
 	SDL_Texture* texture;
