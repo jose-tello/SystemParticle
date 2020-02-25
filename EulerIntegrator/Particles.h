@@ -10,7 +10,7 @@
 class ModuleParticles : public Module
 {
 public:
-	ModuleParticles(Application* app, bool start_enabled = true);
+	ModuleParticles(bool start_enabled = true);
 	~ModuleParticles();
 
 	bool Start();

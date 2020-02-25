@@ -7,7 +7,7 @@
 #include "SDL_image/include/SDL_image.h"
 #pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
 
-ModuleTextures::ModuleTextures(Application* app, bool start_enabled) : Module(app, start_enabled) {
+ModuleTextures::ModuleTextures(bool start_enabled) : Module(start_enabled) {
 
 	for (uint i = 0; i < MAX_TEXTURES; ++i)
 		textures[i] = nullptr;

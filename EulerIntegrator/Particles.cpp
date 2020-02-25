@@ -3,7 +3,7 @@
 #include "Particles.h"
 #include "Textures.h"
 
-ModuleParticles::ModuleParticles(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleParticles::ModuleParticles(bool start_enabled) : Module(start_enabled)
 {}
 
 ModuleParticles::~ModuleParticles()

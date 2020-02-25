@@ -8,8 +8,8 @@
 #include "Particles.h"
 //include header of all existing modules
 
-Application::Application() {
-
+Application::Application(int argc, char* args[]) : argc(argc), args(args) 
+{
 	renderer = new ModuleRender(this);
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
@@ -17,9 +17,9 @@ Application::Application() {
 	textures = new ModuleTextures(this);
 	particles = new ModuleParticles(this);
 
-	gameTimer = new j1Timer();
-	gamePerfTimer = new j1PerfTimer();
-	lastSecFrames = new j1Timer();
+	gameTimer;
+	gamePerfTimer;
+	lastSecFrames;
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -122,7 +122,7 @@ void Application::PrepareUpdate() {
 void Application::FinishUpdate() {
 
 	// Amount of time since game start (use a low resolution timer)
-	float seconds_since_startup = gameTimer->ReadSec();
+	float seconds_since_startup = gameTimer.ReadSec();
 
 	// Average FPS for the whole game life
 	avg_fps = float(frame_count) / seconds_since_startup;
@@ -131,11 +131,11 @@ void Application::FinishUpdate() {
 	last_frame_ms = lastFrameTimer.Read();
 
 	// Amount of frames during the last second
-	if (lastSecFrames->Read() >= 1000)
+	if (lastSecFrames.Read() >= 1000)
 	{
 		frames_on_last_update = last_second_frame_count;
 		last_second_frame_count = 0;
-		lastSecFrames->Start();
+		lastSecFrames.Start();
 	}
 
 	if (last_frame_ms < 1000 / capTime)
@@ -168,4 +168,18 @@ bool Application::CleanUp() {
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
+}
+
+int Application::GetArgc() const
+{
+	return argc;
+}
+
+// ---------------------------------------
+const char* Application::GetArgv(int index) const
+{
+	if (index < argc)
+		return args[index];
+	else
+		return NULL;
 }

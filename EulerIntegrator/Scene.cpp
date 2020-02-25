@@ -5,7 +5,7 @@
 #include "Render.h"
 
 
-ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleScene::ModuleScene(bool start_enabled) : Module(start_enabled)
 {
 	LOG("Contructor of Module Scene has been called");
 }

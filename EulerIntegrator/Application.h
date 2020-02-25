@@ -27,9 +27,9 @@ public:
 	ModuleTextures* textures;
 	ModuleParticles* particles;
 
-	j1Timer* gameTimer = nullptr;
-	j1PerfTimer* gamePerfTimer = nullptr;
-	j1Timer* lastSecFrames = nullptr;
+	j1Timer gameTimer;
+	j1PerfTimer gamePerfTimer;
+	j1Timer lastSecFrames;
 	j1Timer lastFrameTimer;
 
 
@@ -39,19 +39,20 @@ public:
 	uint32 last_frame_ms = 0u;
 	uint32 frames_on_last_update = 0u;
 
-	float avg_fps = 0.0f;
-	float dt = 0.0f;
+	float avg_fps;
+	float dt;
 
-	uint capTime = 0u;
+	uint capTime;
 
 
 private:
-
 	vector<Module*> list_modules;
+	int	argc;
+	char**	args;
 
 public:
 
-	Application();
+	Application(int argc, char* args[]);
 	~Application();
 
 	bool Init();
@@ -60,9 +61,14 @@ public:
 	void FinishUpdate();
 	void PrepareUpdate();
 
+	// Exposing some properties for reading
+	int GetArgc() const;
+	const char* GetArgv(int index) const;
 
 private:
 
 	void AddModule(Module* mod);
 
 };
+
+extern Application* App;
