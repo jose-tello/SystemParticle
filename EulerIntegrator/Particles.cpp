@@ -1,4 +1,5 @@
-
+#include "Application.h"
+#include "Globals.h"
 #include "Particles.h"
 #include "Textures.h"
 

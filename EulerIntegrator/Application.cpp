@@ -50,7 +50,7 @@ bool Application::Init()
 	capTime = 60u;
 
 	// Call Init() in all modules
-	int num_modules = list_modules.capacity();
+	int num_modules = list_modules.size();
 
 	for (int i = 0; i < num_modules && ret == true; i++) {
 
@@ -76,8 +76,7 @@ update_status Application::Update()
 {
 	update_status ret = UPDATE_CONTINUE;
 
-	list_modules.shrink_to_fit(); //Ask Marc why
-	int num_modules = list_modules.capacity();
+	int num_modules = list_modules.size();
 	
 	PrepareUpdate();
 	for (int i = 0; i < num_modules && ret == UPDATE_CONTINUE; i++) {
@@ -158,7 +157,7 @@ void Application::FinishUpdate() {
 //Calls all modules CleanUp()
 bool Application::CleanUp() {
 
-	for (int i = list_modules.capacity() - 1; i > 0; i--) {
+	for (int i = list_modules.size() - 1; i > 0; i--) {
 
 		list_modules[i]->CleanUp();
 	}

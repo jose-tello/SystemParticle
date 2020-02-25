@@ -3,8 +3,7 @@
 #ifndef __MODULE_PARTICLES__
 #define __MODULE_PARTICLES__
 
-#include "Application.h"
-#include "Globals.h"
+
 #include "Module.h"
 #include "Emiter.h"
 
