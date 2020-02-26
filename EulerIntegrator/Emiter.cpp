@@ -1,15 +1,16 @@
 #include "Emiter.h"
-#include "Globals.h"
 #include "Application.h"
 #include "Textures.h"
 #include "Render.h"
-#include "Module.h"
+#include "Particle.h"
+#include "math.h"
 
-Emiter::Emiter(std::vector<Particle> &particleSamples, std::vector<int> &position, std::vector<int> &speedOfParticles, std::vector<int> &accelerationOfParticles, SDL_Rect *areaOfSpawn, SDL_Texture *texture) :
+Emiter::Emiter(std::vector<Particle> &particleSamples, std::vector<int> &position, std::vector<int> &speedOfParticles, std::vector<int> &accelerationOfParticles, float particleAngularSpeed, SDL_Rect *areaOfSpawn, SDL_Texture *texture) :
 	particleSamples(particleSamples),
 	position(position),
 	speedOfParticles(speedOfParticles),
 	accelerationOfParticles(accelerationOfParticles),
+	particleAngularSpeed(particleAngularSpeed),
 	areaOfSpawn(areaOfSpawn),
 	texture(texture)
 {}
@@ -44,6 +45,8 @@ void Emiter::Update(float dt) {
 
 void Emiter::PostUpdate() {
 
+	Draw();
+
 	int numParticles = particleVector.size();
 
 	for (int i = 0; i < numParticles; i++)
@@ -51,23 +54,35 @@ void Emiter::PostUpdate() {
 		particleVector[i].PostUpdate();
 	}
 
-	Draw();
+	
 }
 
 
 void Emiter::Draw() {
 
-	
 	if (texture != nullptr)
 	{
-	//App->
-
-	
+		App->renderer->Blit(texture, position[0], position[1]);
 	}
 }
 
 
 void Emiter::ThrowParticles() {
 
+	for (int i = 0; i < particlesPerFrame; i++)
+	{
+		int random = rand() % particleSamples.size() - 1;
+
+		if (areaOfSpawn == nullptr)
+		{
+			Particle aux(position, speedOfParticles, accelerationOfParticles, particleSamples[random].GetAngle(), particleAngularSpeed, particleSamples[random].GetLife(), particleSamples[random].GetTexture());
+			particleVector.push_back(aux);
+		}
+		
+		else
+		{
+
+		}
+	}
 
 }

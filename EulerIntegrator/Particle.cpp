@@ -7,7 +7,7 @@ Particle::Particle()
 {}
 
 
-Particle::Particle(std::vector<int>& position, std::vector<int>& speed, std::vector<int>& acceleration, float angle, float angularSpeed, float life, SDL_Texture* texture) :
+Particle::Particle(std::vector<int> position, std::vector<int> speed, std::vector<int> acceleration, float angle, float angularSpeed, float life, SDL_Texture* texture) :
 	position(position),
 	speed(speed),
 	acceleration(acceleration),
@@ -57,6 +57,14 @@ float Particle::GetAngle() {
 
 float Particle::GetAngularSpeed() {
 	return angularSpeed;
+}
+
+float Particle::GetLife() {
+	return life;
+}
+
+SDL_Texture* Particle::GetTexture() {
+	return texture;
 }
 
 void Particle::SetPosition(std::vector<int> &pos) {

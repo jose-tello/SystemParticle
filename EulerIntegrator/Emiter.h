@@ -1,16 +1,16 @@
 #pragma once
 
 #include "vector"
-#include "Particle.h"
 
 
+class Particle;
 struct SDL_Rect;
 struct SDL_Texture;
 
 class Emiter
 {
 public:
-	Emiter(std::vector<Particle> &particleSamples, std::vector<int> &position, std::vector<int> &speedOfParticles, std::vector<int> &accelerationOfParticles, SDL_Rect* areaOfSpawn, SDL_Texture* texture);
+	Emiter(std::vector<Particle> &particleSamples, std::vector<int> &position, std::vector<int> &speedOfParticles, std::vector<int> &accelerationOfParticles, float particleAngularSpeed, SDL_Rect* areaOfSpawn, SDL_Texture* texture);
 	~Emiter();
 
 	void Update(float);
@@ -25,9 +25,13 @@ private:
 	std::vector<int> speedOfParticles;
 	std::vector<int> accelerationOfParticles;
 
+	float particleAngularSpeed;
+
 	std::vector<Particle> particleSamples;
 	std::vector<Particle> particleVector;
 
 	SDL_Rect *areaOfSpawn;
 	SDL_Texture* texture; //Optional
+
+	int particlesPerFrame;
 };
