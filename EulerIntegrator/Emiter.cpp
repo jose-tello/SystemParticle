@@ -66,7 +66,7 @@ void Emiter::Draw() {
 	}
 }
 
-
+//Please check this out i fckng hate it but i cant thing of something better and internet doesnt help XD
 void Emiter::ThrowParticles() {
 
 	for (int i = 0; i < particlesPerFrame; i++)
@@ -81,7 +81,10 @@ void Emiter::ThrowParticles() {
 		
 		else
 		{
+			int randomPosX = rand() % areaOfSpawn->x;
+			int randomPosY = rand() % areaOfSpawn->y;
 
+			//std::vector
 		}
 	}
 

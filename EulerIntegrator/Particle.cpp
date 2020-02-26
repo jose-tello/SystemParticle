@@ -103,8 +103,7 @@ void Particle::PostUpdate() {
 
 void Particle::Draw() {
 
-	
-
+	App->renderer->Blit(texture, position[0], position[1]);
 }
 
 void Particle::Move(float dt) {
@@ -125,5 +124,6 @@ void Particle::CheckLife(float dt) {
 	if (life < 0)
 	{
 		//do things, i dont fucking know yet XD
+		//should I destroy the particle or "disable it" to be reutilized by the same emmiter???
 	}
 }

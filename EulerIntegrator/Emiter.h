@@ -30,7 +30,7 @@ private:
 	std::vector<Particle> particleSamples;
 	std::vector<Particle> particleVector;
 
-	SDL_Rect *areaOfSpawn;
+	SDL_Rect *areaOfSpawn; //Optional
 	SDL_Texture* texture; //Optional
 
 	int particlesPerFrame;
