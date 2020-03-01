@@ -15,6 +15,7 @@ public:
 	Particle(int positionX, int positionY, int speedX, int speedY, int accelerationX, int accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture);
 	~Particle();
 
+	//Getters and setters
 	std::vector<int> GetPosition();
 	std::vector<int> GetSpeed();
 	std::vector<int> GetAcceleration();
@@ -32,14 +33,16 @@ public:
 	void SetAngle(float);
 	void SetAngularSpeed(float);
 
-
+	//the actual useful functions
 	void Update(float dt);
 	void PostUpdate();
-
+	
+	bool Activate();
 private:
 	void Move(float dt);
 	void CheckLife(float dt);
 	void Draw();
+	void Desactivate();
 
 private:
 	SDL_Texture* texture;
@@ -52,6 +55,7 @@ private:
 	float angle;
 
 	float life;
+	bool active;
 };
 
 #endif //__PARTICLE_H__

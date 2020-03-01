@@ -14,7 +14,8 @@ Particle::Particle(std::vector<int> position, std::vector<int> speed, std::vecto
 	angle(angle),
 	angularSpeed(angularSpeed),
 	life(life),
-	texture(texture)
+	texture(texture),
+	active(false)
 {}
 
 
@@ -25,7 +26,8 @@ Particle::Particle(int positionX, int positionY, int speedX, int speedY, int acc
 	angle(angle),
 	angularSpeed(angularSpeed),
 	life(life),
-	texture(texture)
+	texture(texture),
+	active(false)
 {}
 
 
@@ -88,26 +90,30 @@ void Particle::SetAngularSpeed(float aspd) {
 }
 
 
-void Particle::Update(float dt) {
-
-	Move(dt);
-	CheckLife(dt);
+void Particle::Update(float dt)
+{
+	if (active)
+	{
+		Move(dt);
+		CheckLife(dt);
+	}
 }
 
 
-void Particle::PostUpdate() {
-
-	Draw();
+void Particle::PostUpdate() 
+{
+	if (active)
+		Draw();
 }
 
 
-void Particle::Draw() {
-
+void Particle::Draw() 
+{
 	App->renderer->Blit(texture, position[0], position[1]);
 }
 
-void Particle::Move(float dt) {
-
+void Particle::Move(float dt) 
+{
 	speed[0] += acceleration[0] * dt;
 	speed[1] += acceleration[1] * dt;
 
@@ -117,13 +123,31 @@ void Particle::Move(float dt) {
 	angle += angularSpeed * dt;
 }
 
-void Particle::CheckLife(float dt) {
-	
+void Particle::CheckLife(float dt) 
+{
 	life -= dt;
 
 	if (life < 0)
 	{
-		//do things, i dont fucking know yet XD
-		//should I destroy the particle or "disable it" to be reutilized by the same emmiter???
+		Desactivate();
+	}
+}
+
+
+void Particle::Desactivate() 
+{
+	active = false;
+}
+
+
+bool Particle::Activate() {
+
+	if (active)
+		return false;
+
+	else
+	{
+		active = true;
+		return true;
 	}
 }
