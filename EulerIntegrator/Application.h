@@ -1,5 +1,8 @@
 #pragma once
 
+#define TIME_CONST 50
+#define MAX_DT 3
+
 #include "p2Defs.h"
 #include "Globals.h"
 #include "p2Log.h"

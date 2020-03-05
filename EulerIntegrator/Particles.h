@@ -7,6 +7,8 @@
 #include "Module.h"
 #include "Emiter.h"
 
+class ParticleSystem;
+
 class ModuleParticles : public Module
 {
 public:
@@ -20,7 +22,7 @@ public:
 
 private:
 	vector<Emiter> particleArray; 
-	
+	ParticleSystem *particleSystem;
 };
 
 

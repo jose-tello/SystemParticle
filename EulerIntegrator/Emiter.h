@@ -10,7 +10,8 @@ struct SDL_Texture;
 class Emiter
 {
 public:
-	Emiter(std::vector<int> &position, std::vector<int> &speedOfParticles, std::vector<int> &accelerationOfParticles, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture);
+	Emiter(std::vector<int> position, std::vector<int> particleSpeed, std::vector<int> particleAcceleration, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture);
+	Emiter(int positionX, int positionY, int particleSpeedX, int particleSpeedY, int particleAccelerationX, int particleAccelerationY, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture);
 	~Emiter();
 
 	void Update(float);
@@ -22,8 +23,8 @@ private:
 
 private:
 	std::vector<int> position;
-	std::vector<int> speedOfParticles;
-	std::vector<int> accelerationOfParticles;
+	std::vector<int> particleSpeed;
+	std::vector<int> particleAcceleration;
 
 	float particleAngularSpeed;
 

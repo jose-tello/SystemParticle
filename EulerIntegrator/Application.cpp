@@ -110,10 +110,10 @@ void Application::PrepareUpdate() {
 	last_second_frame_count++;
 
 	//Controls pause of the game
-	dt = lastFrameTimer.ReadSec();
+	dt = lastFrameTimer.ReadSec() * TIME_CONST;
 
-	if (dt > 0.16f)
-		dt = 0.16f;
+	if (dt > MAX_DT)
+		dt = MAX_DT;
 
 	lastFrameTimer.Start();
 

@@ -5,10 +5,10 @@
 #include "Particle.h"
 #include "math.h"
 
-Emiter::Emiter(std::vector<int>& position, std::vector<int>& speedOfParticles, std::vector<int>& accelerationOfParticles, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
+Emiter::Emiter(std::vector<int> position, std::vector<int> particleSpeed, std::vector<int> particleAcceleration, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
 	position(position),
-	speedOfParticles(speedOfParticles),
-	accelerationOfParticles(accelerationOfParticles),
+	particleSpeed(particleSpeed),
+	particleAcceleration(particleAcceleration),
 	particleAngularSpeed(particleAngularSpeed),
 	particlesRate(particlesRate),
 	particlesLifeTime(particlesLifeTime),
@@ -19,10 +19,29 @@ Emiter::Emiter(std::vector<int>& position, std::vector<int>& speedOfParticles, s
 }
 
 
+Emiter::Emiter(int positionX, int positionY, int particleSpeedX, int particleSpeedY, int particleAccelerationX, int particleAccelerationY, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
+	position{ positionX, positionY },
+	particleSpeed{ particleSpeedX, particleSpeedY },
+	particleAcceleration{particleAccelerationX, particleAccelerationY},
+	particleAngularSpeed(particleAngularSpeed),
+	particlesRate(particlesRate),
+	particlesLifeTime(particlesLifeTime),
+	areaOfSpawn(areaOfSpawn),
+	particleTexture(texture)
+
+{
+	Start();
+}
+
+
 void Emiter::Start() 
 {
-	
+	int maxParticles = particlesRate * particlesLifeTime;
 
+	for (int i = 0; i < maxParticles; i++)
+	{
+		particleVector.push_back(Particle(position, particleSpeed, particleAcceleration, 0, 0, particlesLifeTime, particleTexture));
+	}
 }
 
 Emiter::~Emiter() {
@@ -30,8 +49,8 @@ Emiter::~Emiter() {
 	particleVector.clear();
 
 	position.clear();
-	speedOfParticles.clear();
-	accelerationOfParticles.clear();
+	particleSpeed.clear();
+	particleAcceleration.clear();
 
 	areaOfSpawn = nullptr;
 	particleTexture = nullptr;
@@ -65,9 +84,19 @@ void Emiter::PostUpdate() {
 
 
 
-//Please check this out i fckng hate it but i cant thing of something better and internet doesnt help XD
 void Emiter::ThrowParticles() {
 
-	
+	int particlesEmited = 0;
+
+	for (int i = 0; i < particleVector.size(); i++)
+	{
+		if (particleVector[i].Activate())
+		{
+			particlesEmited++;
+		}
+
+		if (particlesEmited == particlesRate)
+			break;
+	}
 
 }

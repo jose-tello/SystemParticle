@@ -40,9 +40,12 @@ public:
 	bool Activate();
 private:
 	void Move(float dt);
-	void CheckLife(float dt);
 	void Draw();
+
+	void CheckLife(float dt);
 	void Desactivate();
+	
+	void Restart();
 
 private:
 	SDL_Texture* texture;
@@ -50,11 +53,15 @@ private:
 	std::vector<int> position; // 0 is the x axis, and 1 the y axis
 	std::vector<int> speed;
 	std::vector<int> acceleration;
+
+	std::vector<int> originalPosition;
+	std::vector<int> originalSpeed;
 	
 	float angularSpeed;//positive = right, negative = left
 	float angle;
 
 	float life;
+	float originalLife;
 	bool active;
 };
 

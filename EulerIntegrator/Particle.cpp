@@ -9,23 +9,29 @@ Particle::Particle()
 
 Particle::Particle(std::vector<int> position, std::vector<int> speed, std::vector<int> acceleration, float angle, float angularSpeed, float life, SDL_Texture* texture) :
 	position(position),
+	originalPosition(position),
 	speed(speed),
+	originalSpeed(speed),
 	acceleration(acceleration),
 	angle(angle),
 	angularSpeed(angularSpeed),
 	life(life),
+	originalLife(life),
 	texture(texture),
 	active(false)
 {}
 
 
 Particle::Particle(int positionX, int positionY, int speedX, int speedY, int accelerationX, int accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture) :
-	position(positionX, positionY),
-	speed(speedX, speedY),
-	acceleration(accelerationX, accelerationY),
+	position{ positionX, positionY },
+	originalPosition{ positionX, positionY },
+	speed{ speedX, speedY},
+	originalSpeed{ speedX, speedY },
+	acceleration{ accelerationX, accelerationY },
 	angle(angle),
 	angularSpeed(angularSpeed),
 	life(life),
+	originalLife(life),
 	texture(texture),
 	active(false)
 {}
@@ -140,6 +146,15 @@ void Particle::Desactivate()
 }
 
 
+void Particle::Restart() 
+{
+	position = originalPosition;
+	speed = originalSpeed;
+
+	life = originalLife;
+}
+
+
 bool Particle::Activate() {
 
 	if (active)
@@ -147,6 +162,7 @@ bool Particle::Activate() {
 
 	else
 	{
+		Restart();
 		active = true;
 		return true;
 	}
