@@ -120,19 +120,19 @@ void Particle::Draw()
 
 void Particle::Move(float dt) 
 {
-	speed[0] += acceleration[0] * dt;
-	speed[1] += acceleration[1] * dt;
+	speed[0] += round(acceleration[0] * dt);
+	speed[1] += round(acceleration[1] * dt);
 
-	position[0] += speed[0] * dt;
-	position[1] += speed[1] * dt;
+	position[0] += round(speed[0] * dt);
+	position[1] += round(speed[1] * dt);
 
-	angle += angularSpeed * dt;
+	angle += round(angularSpeed * dt);
 }
 
 void Particle::CheckLife(float dt) 
 {
-	life -= dt;
-
+	//life -= dt;
+	life--;
 	if (life < 0)
 	{
 		Desactivate();

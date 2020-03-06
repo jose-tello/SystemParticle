@@ -19,12 +19,16 @@ public:
 
 private:
 	void Start();
+	void CreateParticle();
 	void ThrowParticles();
+
 
 private:
 	std::vector<int> position;
 	std::vector<int> particleSpeed;
 	std::vector<int> particleAcceleration;
+
+	std::vector<int> particleVariationSpeed;
 
 	float particleAngularSpeed;
 

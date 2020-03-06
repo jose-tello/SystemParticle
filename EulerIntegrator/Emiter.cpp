@@ -13,7 +13,8 @@ Emiter::Emiter(std::vector<int> position, std::vector<int> particleSpeed, std::v
 	particlesRate(particlesRate),
 	particlesLifeTime(particlesLifeTime),
 	areaOfSpawn(areaOfSpawn),
-	particleTexture(texture)
+	particleTexture(texture),
+	particleVariationSpeed{10, 5}
 {
 	Start();
 }
@@ -27,7 +28,8 @@ Emiter::Emiter(int positionX, int positionY, int particleSpeedX, int particleSpe
 	particlesRate(particlesRate),
 	particlesLifeTime(particlesLifeTime),
 	areaOfSpawn(areaOfSpawn),
-	particleTexture(texture)
+	particleTexture(texture),
+	particleVariationSpeed{ 15, -5 }
 
 {
 	Start();
@@ -36,12 +38,25 @@ Emiter::Emiter(int positionX, int positionY, int particleSpeedX, int particleSpe
 
 void Emiter::Start() 
 {
-	int maxParticles = particlesRate * particlesLifeTime;
+	int maxParticles = particlesRate * (particlesLifeTime);
 
 	for (int i = 0; i < maxParticles; i++)
 	{
-		particleVector.push_back(Particle(position, particleSpeed, particleAcceleration, 0, 0, particlesLifeTime, particleTexture));
+		CreateParticle();
 	}
+}
+
+
+void Emiter::CreateParticle() 
+{
+	std::vector<int> auxSpeed;
+
+	
+	auxSpeed.push_back(particleSpeed[0] + (rand() % particleVariationSpeed[0]));
+	auxSpeed.push_back(particleSpeed[1] + (rand() % particleVariationSpeed[1]));
+
+	particleVector.push_back(Particle(position, auxSpeed, particleAcceleration, 0, 0, particlesLifeTime, particleTexture));
+
 }
 
 Emiter::~Emiter() {
