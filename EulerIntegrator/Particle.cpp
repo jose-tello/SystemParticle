@@ -115,7 +115,7 @@ void Particle::PostUpdate()
 
 void Particle::Draw() 
 {
-	App->renderer->Blit(texture, position[0], position[1]);
+	App->renderer->Blit(texture, position[0], position[1], nullptr, 0, angle);
 }
 
 void Particle::Move(float dt) 

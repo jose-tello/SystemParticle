@@ -55,7 +55,7 @@ void Emiter::CreateParticle()
 	auxSpeed.push_back(particleSpeed[0] + (rand() % particleVariationSpeed[0]));
 	auxSpeed.push_back(particleSpeed[1] + (rand() % particleVariationSpeed[1]));
 
-	particleVector.push_back(Particle(position, auxSpeed, particleAcceleration, 0, 0, particlesLifeTime, particleTexture));
+	particleVector.push_back(Particle(position, auxSpeed, particleAcceleration, 0, particleAngularSpeed, particlesLifeTime, particleTexture));
 
 }
 
