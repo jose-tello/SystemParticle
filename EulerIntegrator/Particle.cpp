@@ -146,23 +146,24 @@ void Particle::Desactivate()
 }
 
 
-void Particle::Restart() 
+void Particle::Restart(int x, int y) 
 {
-	position = originalPosition;
+	position[0] = x;
+	position[1] = y;
 	speed = originalSpeed;
 
 	life = originalLife;
 }
 
 
-bool Particle::Activate() {
+bool Particle::Activate(int x, int y) {
 
 	if (active)
 		return false;
 
 	else
 	{
-		Restart();
+		Restart(x, y);
 		active = true;
 		return true;
 	}

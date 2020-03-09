@@ -37,7 +37,7 @@ public:
 	void Update(float dt);
 	void PostUpdate();
 	
-	bool Activate();
+	bool Activate(int x, int y);
 private:
 	void Move(float dt);
 	void Draw();
@@ -45,7 +45,7 @@ private:
 	void CheckLife(float dt);
 	void Desactivate();
 	
-	void Restart();
+	void Restart(int x, int y);
 
 private:
 	SDL_Texture* texture;

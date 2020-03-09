@@ -105,7 +105,7 @@ void Emiter::ThrowParticles() {
 
 	for (int i = 0; i < particleVector.size(); i++)
 	{
-		if (particleVector[i].Activate())
+		if (particleVector[i].Activate(position[0], position[1]))
 		{
 			particlesEmited++;
 		}
