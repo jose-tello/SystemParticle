@@ -5,7 +5,7 @@
 #include "Particle.h"
 #include "math.h"
 
-Emiter::Emiter(std::vector<int> position, std::vector<int> particleSpeed, std::vector<int> particleAcceleration, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
+Emiter::Emiter(std::vector<int> &position, std::vector<int> &particleSpeed, std::vector<int> &particleVariationSpeed, std::vector<int> &particleAcceleration, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
 	position(position),
 	particleSpeed(particleSpeed),
 	particleAcceleration(particleAcceleration),
@@ -14,13 +14,13 @@ Emiter::Emiter(std::vector<int> position, std::vector<int> particleSpeed, std::v
 	particlesLifeTime(particlesLifeTime),
 	areaOfSpawn(areaOfSpawn),
 	particleTexture(texture),
-	particleVariationSpeed{10, 5}
+	particleVariationSpeed(particleVariationSpeed)
 {
 	Start();
 }
 
 
-Emiter::Emiter(int positionX, int positionY, int particleSpeedX, int particleSpeedY, int particleAccelerationX, int particleAccelerationY, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
+Emiter::Emiter(int positionX, int positionY, int particleSpeedX, int particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY, int particleAccelerationX, int particleAccelerationY, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
 	position{ positionX, positionY },
 	particleSpeed{ particleSpeedX, particleSpeedY },
 	particleAcceleration{particleAccelerationX, particleAccelerationY},
@@ -29,7 +29,7 @@ Emiter::Emiter(int positionX, int positionY, int particleSpeedX, int particleSpe
 	particlesLifeTime(particlesLifeTime),
 	areaOfSpawn(areaOfSpawn),
 	particleTexture(texture),
-	particleVariationSpeed{ 15, -5 }
+	particleVariationSpeed{ particleVariationSpeedX, particleVariationSpeedY }
 
 {
 	Start();

@@ -14,11 +14,9 @@ ModuleParticles::~ModuleParticles()
 
 bool ModuleParticles::Start() {
 
-	//charge all particles
-	
 
 	particleSystem = new ParticleSystem();
-	Emiter emiter(150, 100, 2, 2, 0, 0, 5, 10, 50, nullptr, App->textures->Load("particleTextures/redParticle.png"));
+	Emiter emiter(150, 100, 2, 2, 15, -5, 0, 0, 5, 10, 50, nullptr, App->textures->Load("particleTextures/redParticle.png"));
 	particleSystem->PushEmiter(emiter);
 
 

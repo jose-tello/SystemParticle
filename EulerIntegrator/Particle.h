@@ -11,7 +11,7 @@ class Particle
 {
 public:
 	Particle();
-	Particle(std::vector<int> position, std::vector<int> speed, std::vector<int> acceleration, float angle, float angularSpeed, float life, SDL_Texture *texture);
+	Particle(std::vector<int> &position, std::vector<int> &speed, std::vector<int> &acceleration, float angle, float angularSpeed, float life, SDL_Texture *texture);
 	Particle(int positionX, int positionY, int speedX, int speedY, int accelerationX, int accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture);
 	~Particle();
 
