@@ -5,7 +5,7 @@
 #include "Particle.h"
 #include "math.h"
 
-Emiter::Emiter(std::vector<int> &position, std::vector<int> &particleSpeed, std::vector<int> &particleVariationSpeed, std::vector<int> &particleAcceleration, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
+Emiter::Emiter(std::vector<float> &position, std::vector<float> &particleSpeed, std::vector<int> &particleVariationSpeed, std::vector<float> &particleAcceleration, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
 	position(position),
 	particleSpeed(particleSpeed),
 	particleAcceleration(particleAcceleration),
@@ -20,7 +20,7 @@ Emiter::Emiter(std::vector<int> &position, std::vector<int> &particleSpeed, std:
 }
 
 
-Emiter::Emiter(int positionX, int positionY, int particleSpeedX, int particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY, int particleAccelerationX, int particleAccelerationY, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
+Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY, float particleAccelerationX, float particleAccelerationY, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
 	position{ positionX, positionY },
 	particleSpeed{ particleSpeedX, particleSpeedY },
 	particleAcceleration{particleAccelerationX, particleAccelerationY},
@@ -30,7 +30,6 @@ Emiter::Emiter(int positionX, int positionY, int particleSpeedX, int particleSpe
 	areaOfSpawn(areaOfSpawn),
 	particleTexture(texture),
 	particleVariationSpeed{ particleVariationSpeedX, particleVariationSpeedY }
-
 {
 	Start();
 }
@@ -38,7 +37,9 @@ Emiter::Emiter(int positionX, int positionY, int particleSpeedX, int particleSpe
 
 void Emiter::Start() 
 {
-	int maxParticles = particlesRate * (particlesLifeTime);
+	int maxParticles = particlesRate * particlesLifeTime * FPS;
+
+	particleVector.reserve(maxParticles);
 
 	for (int i = 0; i < maxParticles; i++)
 	{
@@ -49,7 +50,7 @@ void Emiter::Start()
 
 void Emiter::CreateParticle() 
 {
-	std::vector<int> auxSpeed;
+	std::vector<float> auxSpeed;
 
 	
 	auxSpeed.push_back(particleSpeed[0] + (rand() % particleVariationSpeed[0]));
@@ -66,6 +67,9 @@ Emiter::~Emiter() {
 	position.clear();
 	particleSpeed.clear();
 	particleAcceleration.clear();
+
+	particleVariationSpeed.clear();
+	particleVariationAcceleration.clear();
 
 	areaOfSpawn = nullptr;
 	particleTexture = nullptr;

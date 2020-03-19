@@ -2,7 +2,7 @@
 
 #include "vector"
 
-
+#define FPS 60
 class Particle;
 struct SDL_Rect;
 struct SDL_Texture;
@@ -10,8 +10,8 @@ struct SDL_Texture;
 class Emiter
 {
 public:
-	Emiter(std::vector<int> &position, std::vector<int> &particleSpeed, std::vector<int> &particleVariationSpeed, std::vector<int> &particleAcceleration, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture);
-	Emiter(int positionX, int positionY, int particleSpeedX, int particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY, int particleAccelerationX, int particleAccelerationY, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture);
+	Emiter(std::vector<float> &position, std::vector<float> &particleSpeed, std::vector<int> &particleVariationSpeed, std::vector<float> &particleAcceleration, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture);
+	Emiter(float positionX, float positionY, float particleSpeedX, float particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY, float particleAccelerationX, float particleAccelerationY, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture);
 	~Emiter();
 
 	void Update(float);
@@ -24,11 +24,12 @@ private:
 
 
 private:
-	std::vector<int> position;
-	std::vector<int> particleSpeed;
-	std::vector<int> particleAcceleration;
+	std::vector<float> position;
+	std::vector<float> particleSpeed;
+	std::vector<float> particleAcceleration;
 
 	std::vector<int> particleVariationSpeed;
+	std::vector<int> particleVariationAcceleration;
 
 	float particleAngularSpeed;
 

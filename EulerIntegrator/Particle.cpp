@@ -7,7 +7,7 @@ Particle::Particle()
 {}
 
 
-Particle::Particle(std::vector<int> &position, std::vector<int> &speed, std::vector<int> &acceleration, float angle, float angularSpeed, float life, SDL_Texture* texture) :
+Particle::Particle(std::vector<float> &position, std::vector<float> &speed, std::vector<float> &acceleration, float angle, float angularSpeed, float life, SDL_Texture* texture) :
 	position(position),
 	originalPosition(position),
 	speed(speed),
@@ -22,7 +22,7 @@ Particle::Particle(std::vector<int> &position, std::vector<int> &speed, std::vec
 {}
 
 
-Particle::Particle(int positionX, int positionY, int speedX, int speedY, int accelerationX, int accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture) :
+Particle::Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture) :
 	position{ positionX, positionY },
 	originalPosition{ positionX, positionY },
 	speed{ speedX, speedY},
@@ -47,15 +47,15 @@ Particle::~Particle()
 }
 
 
-std::vector<int> Particle::GetPosition() {
+std::vector<float> Particle::GetPosition() {
 	return position;
 }
 
-std::vector<int> Particle::GetSpeed() {
+std::vector<float> Particle::GetSpeed() {
 	return speed;
 }
 
-std::vector<int> Particle::GetAcceleration() {
+std::vector<float> Particle::GetAcceleration() {
 	return acceleration;
 }
 
@@ -75,15 +75,15 @@ SDL_Texture* Particle::GetTexture() {
 	return texture;
 }
 
-void Particle::SetPosition(std::vector<int> &pos) {
+void Particle::SetPosition(std::vector<float> &pos) {
 	position = pos;
 }
 
-void Particle::SetSpeed(std::vector<int>& spd) {
+void Particle::SetSpeed(std::vector<float>& spd) {
 	speed = spd;
 }
 
-void Particle::SetAcceleration(std::vector<int>& acc) {
+void Particle::SetAcceleration(std::vector<float>& acc) {
 	acceleration = acc;
 }
 
@@ -120,19 +120,19 @@ void Particle::Draw()
 
 void Particle::Move(float dt) 
 {
-	speed[0] += round(acceleration[0] * dt);
-	speed[1] += round(acceleration[1] * dt);
+	speed[0] += acceleration[0] * dt * TIME_CONST;
+	speed[1] += acceleration[1] * dt * TIME_CONST;
 
-	position[0] += round(speed[0] * dt);
-	position[1] += round(speed[1] * dt);
+	position[0] += speed[0] * dt * TIME_CONST;
+	position[1] += speed[1] * dt * TIME_CONST;
 
-	angle += round(angularSpeed * dt);
+	angle += angularSpeed * dt * TIME_CONST;
 }
 
 void Particle::CheckLife(float dt) 
 {
-	//life -= dt;
-	life--;
+	life -= dt;
+
 	if (life < 0)
 	{
 		Desactivate();
@@ -146,7 +146,7 @@ void Particle::Desactivate()
 }
 
 
-void Particle::Restart(int x, int y) 
+void Particle::Restart(float x, float y)
 {
 	position[0] = x;
 	position[1] = y;
@@ -156,7 +156,7 @@ void Particle::Restart(int x, int y)
 }
 
 
-bool Particle::Activate(int x, int y) {
+bool Particle::Activate(float x, float y) {
 
 	if (active)
 		return false;

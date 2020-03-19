@@ -11,14 +11,14 @@ class Particle
 {
 public:
 	Particle();
-	Particle(std::vector<int> &position, std::vector<int> &speed, std::vector<int> &acceleration, float angle, float angularSpeed, float life, SDL_Texture *texture);
-	Particle(int positionX, int positionY, int speedX, int speedY, int accelerationX, int accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture);
+	Particle(std::vector<float> &position, std::vector<float> &speed, std::vector<float> &acceleration, float angle, float angularSpeed, float life, SDL_Texture *texture);
+	Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture);
 	~Particle();
 
 	//Getters and setters
-	std::vector<int> GetPosition();
-	std::vector<int> GetSpeed();
-	std::vector<int> GetAcceleration();
+	std::vector<float> GetPosition();
+	std::vector<float> GetSpeed();
+	std::vector<float> GetAcceleration();
 	
 	float GetAngle();
 	float GetAngularSpeed();
@@ -26,9 +26,9 @@ public:
 	float GetLife();
 	SDL_Texture* GetTexture();
 
-	void SetPosition(std::vector<int> &);
-	void SetSpeed(std::vector<int> &);
-	void SetAcceleration(std::vector<int> &);
+	void SetPosition(std::vector<float> &);
+	void SetSpeed(std::vector<float> &);
+	void SetAcceleration(std::vector<float> &);
 	
 	void SetAngle(float);
 	void SetAngularSpeed(float);
@@ -37,7 +37,7 @@ public:
 	void Update(float dt);
 	void PostUpdate();
 	
-	bool Activate(int x, int y);
+	bool Activate(float x, float y);
 private:
 	void Move(float dt);
 	void Draw();
@@ -45,17 +45,17 @@ private:
 	void CheckLife(float dt);
 	void Desactivate();
 	
-	void Restart(int x, int y);
+	void Restart(float x, float y);
 
 private:
 	SDL_Texture* texture;
 
-	std::vector<int> position; // 0 is the x axis, and 1 the y axis
-	std::vector<int> speed;
-	std::vector<int> acceleration;
+	std::vector<float> position; // 0 is the x axis, and 1 the y axis
+	std::vector<float> speed;
+	std::vector<float> acceleration;
 
-	std::vector<int> originalPosition;
-	std::vector<int> originalSpeed;
+	std::vector<float> originalPosition;
+	std::vector<float> originalSpeed;
 	
 	float angularSpeed;//positive = right, negative = left
 	float angle;

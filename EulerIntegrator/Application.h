@@ -1,7 +1,7 @@
 #pragma once
 
 #define TIME_CONST 50
-#define MAX_DT 3
+#define MAX_DT 0.3
 
 #include "p2Defs.h"
 #include "Globals.h"
