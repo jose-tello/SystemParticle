@@ -11,6 +11,7 @@ class Particle
 {
 public:
 	Particle();
+	Particle(float life, SDL_Texture* texture); //The emiter uses this constructor
 	Particle(std::vector<float> &position, std::vector<float> &speed, std::vector<float> &acceleration, float angle, float angularSpeed, float life, SDL_Texture *texture);
 	Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture);
 	~Particle();
@@ -37,15 +38,14 @@ public:
 	void Update(float dt);
 	void PostUpdate();
 	
-	bool Activate(float x, float y);
+	bool Activate(float x, float y, float speedX, float speedY, float accX, float accY, float angularSpeed);
+
 private:
 	void Move(float dt);
 	void Draw();
 
 	void CheckLife(float dt);
 	void Desactivate();
-	
-	void Restart(float x, float y);
 
 private:
 	SDL_Texture* texture;
@@ -53,9 +53,6 @@ private:
 	std::vector<float> position; // 0 is the x axis, and 1 the y axis
 	std::vector<float> speed;
 	std::vector<float> acceleration;
-
-	std::vector<float> originalPosition;
-	std::vector<float> originalSpeed;
 	
 	float angularSpeed;//positive = right, negative = left
 	float angle;
