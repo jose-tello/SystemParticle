@@ -5,33 +5,36 @@
 #include "Particle.h"
 #include "math.h"
 
-Emiter::Emiter(std::vector<float> &position, std::vector<float> &particleSpeed, std::vector<int> &particleVariationSpeed, std::vector<float> &particleAcceleration, std::vector<int>& particleVariationAcceleration, float particleAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
-	
+Emiter::Emiter(std::vector<float>& position, std::vector<float>& particleSpeed, std::vector<int>& particleVariationSpeed,
+	std::vector<float>& particleAcceleration, std::vector<int>& particleVariationAcceleration, float particleAngularSpeed,
+	int particleVariableAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
+
 	position(position),
 	particleSpeed(particleSpeed),
 	particleVariationSpeed(particleVariationSpeed),
 	particleAcceleration(particleAcceleration),
 	particleVariationAcceleration(particleVariationAcceleration),
 	particleAngularSpeed(particleAngularSpeed),
+	particleVariationAngularSpeed(particleVariableAngularSpeed),
 	particlesRate(particlesRate),
 	particlesLifeTime(particlesLifeTime),
 	areaOfSpawn(areaOfSpawn),
 	particleTexture(texture)
-	
+
 {
 	Start();
 }
 
 
-Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY, float particleAccelerationX,
-	float particleAccelerationY, int particleVariationAccelerationX, int particleVariationAccelerationY, float particleAngularSpeed, int particleVariableAngularSpeed, int particlesRate, 
-	float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
-	
-	position{positionX, positionY},
-	particleSpeed{particleSpeedX, particleSpeedY},
-	particleVariationSpeed{particleVariationSpeedX, particleVariationSpeedY},
-	particleAcceleration{particleAccelerationX, particleAccelerationY},
-	particleVariationAcceleration{particleVariationAccelerationX, particleVariationAccelerationY},
+Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY,
+	float particleAccelerationX, float particleAccelerationY, int particleVariationAccelerationX, int particleVariationAccelerationY, float particleAngularSpeed,
+	int particleVariableAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
+
+	position{ positionX, positionY },
+	particleSpeed{ particleSpeedX, particleSpeedY },
+	particleVariationSpeed{ particleVariationSpeedX, particleVariationSpeedY },
+	particleAcceleration{ particleAccelerationX, particleAccelerationY },
+	particleVariationAcceleration{ particleVariationAccelerationX, particleVariationAccelerationY },
 	particleAngularSpeed(particleAngularSpeed),
 	particleVariationAngularSpeed(particleVariableAngularSpeed),
 	particlesRate(particlesRate),
@@ -43,7 +46,7 @@ Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float par
 }
 
 
-void Emiter::Start() 
+void Emiter::Start()
 {
 	int maxParticles = particlesRate * particlesLifeTime * FPS;
 
@@ -80,7 +83,7 @@ void Emiter::Start()
 }
 
 
-void Emiter::CreateParticle() 
+void Emiter::CreateParticle()
 {
 	particleVector.push_back(Particle(particlesLifeTime, particleTexture));
 }
@@ -105,7 +108,7 @@ Emiter::~Emiter() {
 void Emiter::Update(float dt) {
 
 	ThrowParticles();
-	
+
 	int numParticles = particleVector.size();
 
 	for (int i = 0; i < numParticles; i++)
@@ -124,7 +127,6 @@ void Emiter::PostUpdate() {
 		particleVector[i].PostUpdate();
 	}
 
-	
 }
 
 
@@ -142,11 +144,10 @@ void Emiter::ThrowParticles() {
 		if (particlesEmited == particlesRate)
 			break;
 	}
-
 }
 
 
-float Emiter::GeneratePosX() 
+float Emiter::GeneratePosX()
 {
 	if (randomizePos == true)
 	{

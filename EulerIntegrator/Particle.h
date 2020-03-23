@@ -59,6 +59,8 @@ private:
 
 	float life;
 	float originalLife;
+
+	bool fade;
 	bool active;
 };
 
