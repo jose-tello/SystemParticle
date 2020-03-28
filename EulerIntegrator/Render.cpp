@@ -22,7 +22,7 @@ bool ModuleRender::Init()
 {
 	LOG("Creating Renderer context");
 	bool ret = true;
-	Uint32 flags = 0;
+	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
 	if(VSYNC == true)
 	{
@@ -43,7 +43,7 @@ bool ModuleRender::Init()
 // PreUpdate: clear buffer
 update_status ModuleRender::PreUpdate()
 {
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+	
 	SDL_RenderClear(renderer);
 	return UPDATE_CONTINUE;
 }
@@ -71,6 +71,7 @@ update_status ModuleRender::Update(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRender::PostUpdate()
 {
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 
 	SDL_RenderPresent(renderer);
 	return UPDATE_CONTINUE;
@@ -100,7 +101,7 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, U
 
 	if (alpha != 255)
 	{
-		SDL_SetTextureAlphaMod(texture, 100);
+		SDL_SetTextureAlphaMod(texture, alpha);
 	}
 
 	if(section != NULL)
@@ -127,18 +128,18 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, U
 		p = &pivot;
 	}
 
-	Uint8 iterator;
 
 	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;
 	}
-	SDL_GetTextureAlphaMod(texture, &iterator);
-	/*if (alpha != 255)
+
+
+	if (alpha != 255)
 	{
 		SDL_SetTextureAlphaMod(texture, 255);
-	}*/
+	}
 
 	return ret;
 }
