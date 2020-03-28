@@ -7,7 +7,7 @@
 
 Emiter::Emiter(std::vector<float>& position, std::vector<float>& particleSpeed, std::vector<int>& particleVariationSpeed,
 	std::vector<float>& particleAcceleration, std::vector<int>& particleVariationAcceleration, float particleAngularSpeed,
-	int particleVariableAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
+	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
 
 	position(position),
 	particleSpeed(particleSpeed),
@@ -28,7 +28,7 @@ Emiter::Emiter(std::vector<float>& position, std::vector<float>& particleSpeed, 
 
 Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY,
 	float particleAccelerationX, float particleAccelerationY, int particleVariationAccelerationX, int particleVariationAccelerationY, float particleAngularSpeed,
-	int particleVariableAngularSpeed, int particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
+	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
 
 	position{ positionX, positionY },
 	particleSpeed{ particleSpeedX, particleSpeedY },
@@ -48,7 +48,10 @@ Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float par
 
 void Emiter::Start()
 {
-	int maxParticles = particlesRate * particlesLifeTime * FPS;
+	int maxParticles = particlesRate * particlesLifeTime + 1;
+
+	//We assume that the game will allways go at 60 FPS
+	particlesPerFrame = particlesRate * 16 / 1000;
 
 	particleVector.reserve(maxParticles);
 
@@ -132,17 +135,25 @@ void Emiter::PostUpdate() {
 
 void Emiter::ThrowParticles() {
 
-	int particlesEmited = 0;
+	particlesEmited += particlesPerFrame;
 
-	for (int i = 0; i < particleVector.size(); i++)
+	if (particlesEmited >= 1)
 	{
-		if (particleVector[i].Activate(GeneratePosX(), GeneratePosY(), GenerateSpeedX(), GenerateSpeedY(), GenerateAccelerationX(), GenerateAccelerationY(), GenerateAngularSpeed()))
+		int emited = 0;
+
+		for (int i = 0; i < particleVector.size(); i++)
 		{
-			particlesEmited++;
+			if (particleVector[i].Activate(GeneratePosX(), GeneratePosY(), GenerateSpeedX(), GenerateSpeedY(), GenerateAccelerationX(), GenerateAccelerationY(), GenerateAngularSpeed()))
+			{
+				emited++;
+			}
+
+			if ((int)particlesEmited == emited)
+				break;
+			
 		}
 
-		if (particlesEmited == particlesRate)
-			break;
+		particlesEmited -= emited;
 	}
 }
 

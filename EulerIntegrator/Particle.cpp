@@ -7,42 +7,59 @@ Particle::Particle()
 {}
 
 
-Particle::Particle(std::vector<float> &position, std::vector<float> &speed, std::vector<float> &acceleration, float angle, float angularSpeed, float life, SDL_Texture* texture) :
+Particle::Particle(std::vector<float> &position, std::vector<float> &speed, std::vector<float> &acceleration, 
+	float angle, float angularSpeed, float life, SDL_Texture* texture, bool fade) :
+
 	position(position),
 	speed(speed),
 	acceleration(acceleration),
 	angle(angle),
 	angularSpeed(angularSpeed),
+
 	life(life),
 	originalLife(life),
+
 	texture(texture),
+
+	fade(fade),
 	active(false)
+	
 {}
 
 
-Particle::Particle(float life, SDL_Texture* texture) :
+Particle::Particle(float life, SDL_Texture* texture, bool fade) :
+
 	position{NULL, NULL},
 	speed{NULL, NULL},
 	acceleration{NULL, NULL},
 	angle(0),
 	angularSpeed(0),
+
 	life(life),
 	originalLife(life),
+
 	texture(texture),
+
+	fade(fade),
 	active(false)
 {}
 
 
 
-Particle::Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture) :
+Particle::Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, 
+	float accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture, bool fade) :
+
 	position{ positionX, positionY },
 	speed{ speedX, speedY},
 	acceleration{ accelerationX, accelerationY },
 	angle(angle),
 	angularSpeed(angularSpeed),
+
 	life(life),
 	originalLife(life),
 	texture(texture),
+
+	fade(fade),
 	active(false)
 {}
 
@@ -125,7 +142,16 @@ void Particle::PostUpdate()
 
 void Particle::Draw() 
 {
-	App->renderer->Blit(texture, position[0], position[1], nullptr, 0, angle);
+	if (fade == true)
+	{
+		Uint8 transparency = life / originalLife * 255;
+		App->renderer->Blit(texture, position[0], position[1], nullptr, 20, 0, angle);
+	}
+
+	else
+		App->renderer->Blit(texture, position[0], position[1], nullptr, 255, 0, angle);
+	
+	
 }
 
 void Particle::Move(float dt) 
