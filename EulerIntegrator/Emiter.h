@@ -24,8 +24,8 @@ public:
 	void Update(float);
 	void PostUpdate();
 
-	void GetPosition(std::vector<float>&);
-	void SetPosition(std::vector<float>*);
+	void GetPosition(int &x, int &y);
+	void SetPosition(int x, int y);
 
 private:
 	void Start();

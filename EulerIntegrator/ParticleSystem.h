@@ -7,6 +7,8 @@ class ParticleSystem
 {
 public:
 	ParticleSystem();
+	ParticleSystem(float x, float y);
+
 	~ParticleSystem();
 
 	void PushEmiter(Emiter& emiter);
@@ -19,8 +21,12 @@ public:
 
 	bool IsActive();
 
+	void Move(int x, int y);
+
 private:
 	std::vector<Emiter> emiterVector;
+	std::vector<float>	position;
+
 	bool active;
 };
 

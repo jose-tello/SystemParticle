@@ -4,6 +4,7 @@
 #include "Emiter.h"
 #include "ParticleSystem.h"
 #include "Textures.h"
+#include "Input.h"
 
 ModuleParticles::ModuleParticles(bool start_enabled) : Module(start_enabled)
 {}
@@ -26,9 +27,20 @@ bool ModuleParticles::Start()
 
 update_status ModuleParticles::PreUpdate() 
 {
+	if (App->input->GetKey(SDL_SCANCODE_1))
+	{
+		particleSystem->Activate();
+	}
 
+	if (App->input->GetKey(SDL_SCANCODE_2))
+	{
+		particleSystem->Desactivate();
+	}
 
-
+	if (App->input->GetKey(SDL_SCANCODE_3))
+	{
+		particleSystem->Move(App->input->GetMouseX(), App->input->GetMouseY());
+	}
 	return UPDATE_CONTINUE;
 }
 

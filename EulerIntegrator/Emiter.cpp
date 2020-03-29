@@ -256,3 +256,16 @@ float Emiter::GenerateAngularSpeed()
 	else
 		return particleAngularSpeed;
 }
+
+
+void Emiter::GetPosition(int &x, int &y)
+{
+	x = position[0];
+	y = position[1];
+}
+
+void Emiter::SetPosition(int x, int y)
+{
+	position[0] = x;
+	position[1] = y;
+}
