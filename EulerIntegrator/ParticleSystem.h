@@ -13,8 +13,14 @@ public:
 
 	void Update(float dt);
 	void PostUpdate();
+
+	void Desactivate();
+	void Activate();
+
+	bool IsActive();
+
 private:
 	std::vector<Emiter> emiterVector;
-
+	bool active;
 };
 

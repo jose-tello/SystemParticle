@@ -5,9 +5,9 @@
 
 
 #include "Module.h"
-#include "Emiter.h"
 
 class ParticleSystem;
+class Emiter;
 
 class ModuleParticles : public Module
 {

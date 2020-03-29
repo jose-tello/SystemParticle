@@ -2,7 +2,8 @@
 #include "Emiter.h"
 #include "Particle.h"
 
-ParticleSystem::ParticleSystem()
+ParticleSystem::ParticleSystem() :
+	active(true)
 {}
 
 
@@ -14,22 +15,28 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::Update(float dt)
 {
-	int numEmiters = emiterVector.size();
-
-	for (int i = 0; i < numEmiters; i++)
+	if (active) 
 	{
-		emiterVector[i].Update(dt);
+		int numEmiters = emiterVector.size();
+
+		for (int i = 0; i < numEmiters; i++)
+		{
+			emiterVector[i].Update(dt);
+		}
 	}
 }
 
 
 void ParticleSystem::PostUpdate() 
 {
-	int numEmiters = emiterVector.size();
-
-	for (int i = 0; i < numEmiters; i++)
+	if (active)
 	{
-		emiterVector[i].PostUpdate();
+		int numEmiters = emiterVector.size();
+
+		for (int i = 0; i < numEmiters; i++)
+		{
+			emiterVector[i].PostUpdate();
+		}
 	}
 }
 
@@ -37,4 +44,22 @@ void ParticleSystem::PostUpdate()
 void ParticleSystem::PushEmiter(Emiter& emiter) 
 {
 	emiterVector.push_back(emiter);
+}
+
+
+void ParticleSystem::Desactivate()
+{
+	active = false;
+}
+
+
+void ParticleSystem::Activate()
+{
+	active = true;
+}
+
+
+bool ParticleSystem::IsActive()
+{
+	return active;
 }
