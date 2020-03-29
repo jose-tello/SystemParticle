@@ -58,6 +58,7 @@ Particle::Particle(float positionX, float positionY, float speedX, float speedY,
 
 	life(life),
 	originalLife(life),
+
 	texture(texture),
 
 	fade(fade),

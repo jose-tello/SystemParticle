@@ -54,8 +54,8 @@ private:
 	std::vector<float> speed;
 	std::vector<float> acceleration;
 	
-	float angularSpeed;//positive = right, negative = left
 	float angle;
+	float angularSpeed;//positive = right, negative = left
 
 	float life;
 	float originalLife;
