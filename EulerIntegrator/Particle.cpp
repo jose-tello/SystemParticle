@@ -78,45 +78,56 @@ std::vector<float> Particle::GetPosition() {
 	return position;
 }
 
+
 std::vector<float> Particle::GetSpeed() {
 	return speed;
 }
+
 
 std::vector<float> Particle::GetAcceleration() {
 	return acceleration;
 }
 
+
 float Particle::GetAngle() {
 	return angle;
 }
+
 
 float Particle::GetAngularSpeed() {
 	return angularSpeed;
 }
 
+
 float Particle::GetLife() {
 	return life;
 }
+
 
 SDL_Texture* Particle::GetTexture() {
 	return texture;
 }
 
+
 void Particle::SetPosition(std::vector<float> &pos) {
 	position = pos;
 }
+
 
 void Particle::SetSpeed(std::vector<float>& spd) {
 	speed = spd;
 }
 
+
 void Particle::SetAcceleration(std::vector<float>& acc) {
 	acceleration = acc;
 }
 
+
 void Particle::SetAngle(float ang) {
 	angle = ang;
 }
+
 
 void Particle::SetAngularSpeed(float aspd) {
 	angularSpeed = aspd;
@@ -145,12 +156,11 @@ void Particle::Draw()
 	if (fade == true)
 	{
 		Uint8 transparency = life / originalLife * 255;
-		App->renderer->Blit(texture, position[0], position[1], nullptr, 20, 0, angle);
+		App->renderer->Blit(texture, position[0], position[1], nullptr, transparency, 0, angle);
 	}
 
 	else
 		App->renderer->Blit(texture, position[0], position[1], nullptr, 255, 0, angle);
-	
 	
 }
 
@@ -165,6 +175,7 @@ void Particle::Move(float dt)
 	angle += angularSpeed * dt * TIME_CONST;
 }
 
+ 
 void Particle::CheckLife(float dt) 
 {
 	life -= dt;

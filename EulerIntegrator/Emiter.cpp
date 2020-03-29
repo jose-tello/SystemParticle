@@ -7,7 +7,7 @@
 
 Emiter::Emiter(std::vector<float>& position, std::vector<float>& particleSpeed, std::vector<int>& particleVariationSpeed,
 	std::vector<float>& particleAcceleration, std::vector<int>& particleVariationAcceleration, float particleAngularSpeed,
-	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
+	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, bool fade) :
 
 	position(position),
 	particleSpeed(particleSpeed),
@@ -16,10 +16,14 @@ Emiter::Emiter(std::vector<float>& position, std::vector<float>& particleSpeed, 
 	particleVariationAcceleration(particleVariationAcceleration),
 	particleAngularSpeed(particleAngularSpeed),
 	particleVariationAngularSpeed(particleVariableAngularSpeed),
+
 	particlesRate(particlesRate),
 	particlesLifeTime(particlesLifeTime),
+
 	areaOfSpawn(areaOfSpawn),
-	particleTexture(texture)
+	particleTexture(texture),
+
+	fadeParticles(fade)
 
 {
 	Start();
@@ -28,7 +32,7 @@ Emiter::Emiter(std::vector<float>& position, std::vector<float>& particleSpeed, 
 
 Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY,
 	float particleAccelerationX, float particleAccelerationY, int particleVariationAccelerationX, int particleVariationAccelerationY, float particleAngularSpeed,
-	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture) :
+	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, bool fade) :
 
 	position{ positionX, positionY },
 	particleSpeed{ particleSpeedX, particleSpeedY },
@@ -37,10 +41,14 @@ Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float par
 	particleVariationAcceleration{ particleVariationAccelerationX, particleVariationAccelerationY },
 	particleAngularSpeed(particleAngularSpeed),
 	particleVariationAngularSpeed(particleVariableAngularSpeed),
+
 	particlesRate(particlesRate),
 	particlesLifeTime(particlesLifeTime),
+
 	areaOfSpawn(areaOfSpawn),
-	particleTexture(texture)
+	particleTexture(texture),
+
+	fadeParticles(fade)
 {
 	Start();
 }
@@ -88,7 +96,7 @@ void Emiter::Start()
 
 void Emiter::CreateParticle()
 {
-	particleVector.push_back(Particle(particlesLifeTime, particleTexture));
+	particleVector.push_back(Particle(particlesLifeTime, particleTexture, fadeParticles));
 }
 
 
