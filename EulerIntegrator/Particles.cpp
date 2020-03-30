@@ -17,10 +17,11 @@ bool ModuleParticles::Start()
 {
 	particleSystem = new ParticleSystem();
 	rect = { 0, 0, 100, 100 };
-	//emiter = new Emiter(150, 100, 2, 2, 15, -5, 0, 0, 2, 1, 5, 0, 5, 1, &rect, App->textures->Load("particleTextures/redParticle.png"), true);
-	emiter2 = new Emiter(150, 100, 2, 2, 2, -2, 0, 0, 2, 1, -2, 0, 5, 0.5, nullptr, App->textures->Load("particleTextures/littleBlueParticle.png"), false);
+	Emiter emiter(80, 90, 2, 2, 15, -5, 0, 0, 2, 1, 5, 0, 50, 1, &rect, App->textures->Load("particleTextures/redParticle.png"), true);
+	Emiter emiter2(50, 50, 2, 2, 2, -2, 0, 0, 2, 1, -2, 0, 5, 2, nullptr, App->textures->Load("particleTextures/littleBlueParticle.png"), false);
 	
-	particleSystem->PushEmiter(*emiter2);
+	particleSystem->PushEmiter(emiter);
+	particleSystem->PushEmiter(emiter2);
 
 	return true;
 }

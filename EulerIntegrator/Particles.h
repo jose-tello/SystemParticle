@@ -25,8 +25,6 @@ private:
 	ParticleSystem *particleSystem;
 
 	SDL_Rect rect;
-	Emiter* emiter;
-	Emiter* emiter2;
 };
 
 
