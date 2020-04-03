@@ -9,7 +9,7 @@ Particle::Particle()
 
 
 Particle::Particle(std::vector<float> &position, std::vector<float> &speed, std::vector<float> &acceleration, 
-	float angle, float angularSpeed, float life, SDL_Texture* texture, bool fade) :
+	float angle, float angularSpeed, float life, SDL_Texture* texture, Animation animation, bool fade) :
 
 	position(position),
 	speed(speed),
@@ -21,6 +21,7 @@ Particle::Particle(std::vector<float> &position, std::vector<float> &speed, std:
 	originalLife(life),
 
 	texture(texture),
+	animation(animation),
 
 	fade(fade),
 	active(false)
@@ -28,7 +29,7 @@ Particle::Particle(std::vector<float> &position, std::vector<float> &speed, std:
 {}
 
 
-Particle::Particle(float life, SDL_Texture* texture, bool fade) :
+Particle::Particle(float life, SDL_Texture* texture, Animation animation, bool fade) :
 
 	position{NULL, NULL},
 	speed{NULL, NULL},
@@ -40,6 +41,7 @@ Particle::Particle(float life, SDL_Texture* texture, bool fade) :
 	originalLife(life),
 
 	texture(texture),
+	animation(animation),
 
 	fade(fade),
 	active(false)
@@ -47,8 +49,8 @@ Particle::Particle(float life, SDL_Texture* texture, bool fade) :
 
 
 
-Particle::Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, 
-	float accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture, bool fade) :
+Particle::Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY, 
+	float angle, float angularSpeed, float life, SDL_Texture* texture, Animation animation, bool fade) :
 
 	position{ positionX, positionY },
 	speed{ speedX, speedY},
@@ -60,6 +62,7 @@ Particle::Particle(float positionX, float positionY, float speedX, float speedY,
 	originalLife(life),
 
 	texture(texture),
+	animation(animation),
 
 	fade(fade),
 	active(false)
@@ -146,23 +149,23 @@ void Particle::Update(float dt)
 }
 
 
-void Particle::PostUpdate() 
+void Particle::PostUpdate(float dt) 
 {
 	if (active)
-		Draw();
+		Draw(dt);
 }
 
 
-void Particle::Draw() 
+void Particle::Draw(float dt) 
 {
 	if (fade == true)
 	{
 		Uint8 transparency = life / originalLife * 255;
-		App->renderer->Blit(texture, position[0], position[1], nullptr, transparency, 0, angle);
+		App->renderer->Blit(texture, position[0], position[1], &animation.GetCurrentFrameBox(dt), transparency, 0, angle);
 	}
 
 	else
-		App->renderer->Blit(texture, position[0], position[1], nullptr, 255, 0, angle);
+		App->renderer->Blit(texture, position[0], position[1], &animation.GetCurrentFrameBox(dt), 255, 0, angle);
 	
 }
 

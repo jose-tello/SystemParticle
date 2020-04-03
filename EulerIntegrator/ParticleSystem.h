@@ -14,7 +14,7 @@ public:
 	void PushEmiter(Emiter& emiter);
 
 	void Update(float dt);
-	void PostUpdate();
+	void PostUpdate(float dt);
 
 	void Desactivate();
 	void Activate();

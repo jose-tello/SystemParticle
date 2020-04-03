@@ -24,7 +24,10 @@ private:
 	vector<Emiter> particleArray; 
 	ParticleSystem *particleSystem;
 
+	float dtime;
+
 	SDL_Rect rect;
+	SDL_Rect rect2;
 };
 
 

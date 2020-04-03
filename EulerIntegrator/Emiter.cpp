@@ -7,7 +7,7 @@
 
 Emiter::Emiter(std::vector<float>& position, std::vector<float>& particleSpeed, std::vector<int>& particleVariationSpeed,
 	std::vector<float>& particleAcceleration, std::vector<int>& particleVariationAcceleration, float particleAngularSpeed,
-	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, bool fade) :
+	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade) :
 
 	position(position),
 	particleSpeed(particleSpeed),
@@ -22,6 +22,18 @@ Emiter::Emiter(std::vector<float>& position, std::vector<float>& particleSpeed, 
 
 	areaOfSpawn(areaOfSpawn),
 	particleTexture(texture),
+	particleAnimation(particleAnimation),
+
+	randomizePosX(true),
+	randomizePosY(true),
+
+	randomizeSpeedX(true),
+	randomizeSpeedY(true),
+
+	randomizeAccelerationX(true),
+	randomizeAccelerationY(true),
+
+	randomizeAngularSpeed(true),
 
 	fadeParticles(fade)
 
@@ -32,7 +44,7 @@ Emiter::Emiter(std::vector<float>& position, std::vector<float>& particleSpeed, 
 
 Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY,
 	float particleAccelerationX, float particleAccelerationY, int particleVariationAccelerationX, int particleVariationAccelerationY, float particleAngularSpeed,
-	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, bool fade) :
+	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade) :
 
 	position{ positionX, positionY },
 	particleSpeed{ particleSpeedX, particleSpeedY },
@@ -47,6 +59,18 @@ Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float par
 
 	areaOfSpawn(areaOfSpawn),
 	particleTexture(texture),
+	particleAnimation(particleAnimation),
+
+	randomizePosX(true),
+	randomizePosY(true),
+
+	randomizeSpeedX(true),
+	randomizeSpeedY(true),
+
+	randomizeAccelerationX(true),
+	randomizeAccelerationY(true),
+
+	randomizeAngularSpeed(true),
 
 	fadeParticles(fade)
 {
@@ -71,32 +95,55 @@ void Emiter::Start()
 
 	if (areaOfSpawn == nullptr)
 	{
-		randomizePos = false;
+		randomizePosX = false;
+		randomizePosY = false;
 	}
+
 	else
-		randomizePos = true;
-
-
-	if (particleVariationSpeed[0] == NULL && particleVariationSpeed[1] == NULL)
 	{
-		randomizeSpeed = false;
+		if (areaOfSpawn->w == 0)
+		{
+			randomizePosX = false;
+		}
+		
+		if (areaOfSpawn->h == 0)
+		{
+			randomizePosY = false;
+		}
 	}
-	else
-		randomizeSpeed = true;
 
 
-	if (particleVariationAcceleration[0] == NULL && particleVariationAcceleration[1] == NULL)
+	if (particleVariationSpeed[0] == NULL)
 	{
-		randomizeAcceleration = false;
+		randomizeSpeedX = false;
 	}
-	else
-		randomizeAcceleration = true;
+
+	if (particleVariationSpeed[1] == NULL)
+	{
+		randomizeSpeedY = false;
+	}
+
+
+	if (particleVariationAcceleration[0] == NULL)
+	{
+		randomizeAccelerationX = false;
+	}
+	
+	if (particleVariationAcceleration[1] == NULL)
+	{
+		randomizeAccelerationY = false;
+	}
+
+	if (particleVariationAngularSpeed == 0)
+	{
+		randomizeAngularSpeed = false;
+	}
 }
 
 
 void Emiter::CreateParticle()
 {
-	particleVector.push_back(Particle(particlesLifeTime, particleTexture, fadeParticles));
+	particleVector.push_back(Particle(particlesLifeTime, particleTexture, particleAnimation, fadeParticles));
 }
 
 
@@ -129,13 +176,13 @@ void Emiter::Update(float dt) {
 }
 
 
-void Emiter::PostUpdate() {
+void Emiter::PostUpdate(float dt) {
 
 	int numParticles = particleVector.size();
 
 	for (int i = 0; i < numParticles; i++)
 	{
-		particleVector[i].PostUpdate();
+		particleVector[i].PostUpdate(dt);
 	}
 
 }
@@ -168,7 +215,7 @@ void Emiter::ThrowParticles() {
 
 float Emiter::GeneratePosX()
 {
-	if (randomizePos == true)
+	if (randomizePosX == true)
 	{
 		float x = (rand() % areaOfSpawn->w) + position[0];
 		return x;
@@ -181,7 +228,7 @@ float Emiter::GeneratePosX()
 
 float Emiter::GeneratePosY()
 {
-	if (randomizePos == true)
+	if (randomizePosY == true)
 	{
 		float y = (rand() % areaOfSpawn->h) + position[1];
 		return y;
@@ -194,7 +241,7 @@ float Emiter::GeneratePosY()
 
 float Emiter::GenerateSpeedX()
 {
-	if (randomizeSpeed == true)
+	if (randomizeSpeedX == true)
 	{
 		float speedX = (rand() % particleVariationSpeed[0]) + particleSpeed[0];
 		return speedX;
@@ -207,7 +254,7 @@ float Emiter::GenerateSpeedX()
 
 float Emiter::GenerateSpeedY()
 {
-	if (randomizeSpeed == true)
+	if (randomizeSpeedY == true)
 	{
 		float speedY = (rand() % particleVariationSpeed[1]) + particleSpeed[1];
 		return speedY;
@@ -221,7 +268,7 @@ float Emiter::GenerateSpeedY()
 
 float Emiter::GenerateAccelerationX()
 {
-	if (randomizeAcceleration == true)
+	if (randomizeAccelerationX == true)
 	{
 		float accX = (rand() % particleVariationAcceleration[0]) + particleAcceleration[0];
 		return accX;
@@ -234,7 +281,7 @@ float Emiter::GenerateAccelerationX()
 
 float Emiter::GenerateAccelerationY()
 {
-	if (randomizeAcceleration == true)
+	if (randomizeAccelerationY == true)
 	{
 		float accY = (rand() % particleVariationAcceleration[1]) + particleAcceleration[1];
 		return accY;

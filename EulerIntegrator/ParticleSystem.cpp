@@ -32,7 +32,7 @@ void ParticleSystem::Update(float dt)
 }
 
 
-void ParticleSystem::PostUpdate() 
+void ParticleSystem::PostUpdate(float dt) 
 {
 	if (active)
 	{
@@ -40,7 +40,7 @@ void ParticleSystem::PostUpdate()
 
 		for (int i = 0; i < numEmiters; i++)
 		{
-			emiterVector[i].PostUpdate();
+			emiterVector[i].PostUpdate(dt);
 		}
 	}
 }

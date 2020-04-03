@@ -4,6 +4,7 @@
 #define __PARTICLE_H__
 
 #include "vector"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -11,9 +12,9 @@ class Particle
 {
 public:
 	Particle();
-	Particle(float life, SDL_Texture* texture, bool fade = false); //The emiter uses this constructor
-	Particle(std::vector<float> &position, std::vector<float> &speed, std::vector<float> &acceleration, float angle, float angularSpeed, float life, SDL_Texture *texture, bool fade = false);
-	Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture, bool fade = false);
+	Particle(float life, SDL_Texture* texture, Animation animation, bool fade = false); //The emiter uses this constructor
+	Particle(std::vector<float> &position, std::vector<float> &speed, std::vector<float> &acceleration, float angle, float angularSpeed, float life, SDL_Texture *texture, Animation animation, bool fade = false);
+	Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture, Animation animation, bool fade = false);
 	~Particle();
 
 	//Getters and setters
@@ -36,19 +37,20 @@ public:
 
 	//the actual useful functions
 	void Update(float dt);
-	void PostUpdate();
+	void PostUpdate(float dt);
 	
 	bool Activate(float x, float y, float speedX, float speedY, float accX, float accY, float angularSpeed);
 
 private:
 	void Move(float dt);
-	void Draw();
+	void Draw(float dt);
 
 	void CheckLife(float dt);
 	void Desactivate();
 
 private:
 	SDL_Texture* texture;
+	Animation animation;
 
 	std::vector<float> position; // 0 is the x axis, and 1 the y axis
 	std::vector<float> speed;
