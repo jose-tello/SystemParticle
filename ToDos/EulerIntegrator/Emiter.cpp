@@ -35,6 +35,8 @@ Emiter::Emiter(std::vector<float>& position, std::vector<float>& particleSpeed, 
 
 	randomizeAngularSpeed(true),
 
+	active(true),
+
 	fadeParticles(fade)
 
 {
@@ -71,6 +73,8 @@ Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float par
 	randomizeAccelerationY(true),
 
 	randomizeAngularSpeed(true),
+
+	active(true),
 
 	fadeParticles(fade)
 {
@@ -168,7 +172,9 @@ Emiter::~Emiter() {
 
 void Emiter::Update(float dt) {
 
-	ThrowParticles();
+	if (active) {
+		ThrowParticles();
+	}
 
 	int numParticles = particleVector.size();
 
@@ -190,16 +196,14 @@ void Emiter::PostUpdate(float dt) {
 
 }
 
+void Emiter::Activate() 
+{
+	active = true;
+}
 
 void Emiter::Desactivate()
 {
-	int numParticles = particleVector.size();
-
-	for (int i = 0; i < numParticles; i++)
-	{
-		particleVector[i].Desactivate();
-	}
-
+	active = false;
 }
 
 //This funtions activates the necesary particles and gives them the initial values

@@ -3,12 +3,12 @@
 #include "Particle.h"
 
 ParticleSystem::ParticleSystem() :
-	position{ 0, 0},
+	position{ 0, 0 },
 	active(true)
 {}
 
 ParticleSystem::ParticleSystem(float x, float y) :
-	position{x, y},
+	position{ x, y },
 	active(true)
 {}
 
@@ -20,33 +20,28 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::Update(float dt)
 {
-	if (active) 
-	{
-		int numEmiters = emiterVector.size();
+	int numEmiters = emiterVector.size();
 
-		for (int i = 0; i < numEmiters; i++)
-		{
-			emiterVector[i].Update(dt);
-		}
+	for (int i = 0; i < numEmiters; i++)
+	{
+		emiterVector[i].Update(dt);
 	}
+
 }
 
 
-void ParticleSystem::PostUpdate(float dt) 
+void ParticleSystem::PostUpdate(float dt)
 {
-	if (active) 
-	{
-		int numEmiters = emiterVector.size();
+	int numEmiters = emiterVector.size();
 
-		for (int i = 0; i < numEmiters; i++)
-		{
-			emiterVector[i].PostUpdate(dt);
-		}
+	for (int i = 0; i < numEmiters; i++)
+	{
+		emiterVector[i].PostUpdate(dt);
 	}
 }
 
 
-void ParticleSystem::PushEmiter(Emiter& emiter) 
+void ParticleSystem::PushEmiter(Emiter& emiter)
 {
 	emiterVector.push_back(emiter);
 }
@@ -67,6 +62,13 @@ void ParticleSystem::Desactivate()
 
 void ParticleSystem::Activate()
 {
+	int numEmiters = emiterVector.size();
+
+	for (int i = 0; i < numEmiters; i++)
+	{
+		emiterVector[i].Activate();
+	}
+
 	active = true;
 }
 

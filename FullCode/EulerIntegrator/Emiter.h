@@ -27,6 +27,7 @@ public:
 	void GetPosition(int &x, int &y);
 	void SetPosition(int x, int y);
 
+	void Activate();
 	void Desactivate();
 
 private:
@@ -82,4 +83,5 @@ private:
 
 	bool fadeParticles;
 
+	bool active;
 };

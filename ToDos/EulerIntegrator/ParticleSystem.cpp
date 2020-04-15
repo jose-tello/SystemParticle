@@ -20,29 +20,24 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::Update(float dt)
 {
-	if (active)
-	{
-		int numEmiters = emiterVector.size();
+	int numEmiters = emiterVector.size();
 
-		for (int i = 0; i < numEmiters; i++)
-		{
-			emiterVector[i].Update(dt);
-		}
+	for (int i = 0; i < numEmiters; i++)
+	{
+		emiterVector[i].Update(dt);
 	}
 }
 
 
 void ParticleSystem::PostUpdate(float dt)
 {
-	if (active)
-	{
-		int numEmiters = emiterVector.size();
+	int numEmiters = emiterVector.size();
 
-		for (int i = 0; i < numEmiters; i++)
-		{
-			emiterVector[i].PostUpdate(dt);
-		}
+	for (int i = 0; i < numEmiters; i++)
+	{
+		emiterVector[i].PostUpdate(dt);
 	}
+
 }
 
 
@@ -67,6 +62,13 @@ void ParticleSystem::Desactivate()
 
 void ParticleSystem::Activate()
 {
+	int numEmiters = emiterVector.size();
+
+	for (int i = 0; i < numEmiters; i++)
+	{
+		emiterVector[i].Activate();
+	}
+
 	active = true;
 }
 

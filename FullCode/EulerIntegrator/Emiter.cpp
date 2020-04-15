@@ -35,6 +35,8 @@ Emiter::Emiter(std::vector<float>& position, std::vector<float>& particleSpeed, 
 
 	randomizeAngularSpeed(true),
 
+	active(true),
+
 	fadeParticles(fade)
 
 {
@@ -72,6 +74,8 @@ Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float par
 
 	randomizeAngularSpeed(true),
 
+	active(true),
+
 	fadeParticles(fade)
 {
 	Start();
@@ -105,7 +109,7 @@ void Emiter::Start()
 		{
 			randomizePosX = false;
 		}
-		
+
 		if (areaOfSpawn->h == 0)
 		{
 			randomizePosY = false;
@@ -128,7 +132,7 @@ void Emiter::Start()
 	{
 		randomizeAccelerationX = false;
 	}
-	
+
 	if (particleVariationAcceleration[1] == NULL)
 	{
 		randomizeAccelerationY = false;
@@ -165,9 +169,13 @@ Emiter::~Emiter() {
 
 void Emiter::Update(float dt) {
 
-	ThrowParticles();
+	if (active)
+	{
+		ThrowParticles();
+	}
 
 	int numParticles = particleVector.size();
+
 
 	for (int i = 0; i < numParticles; i++)
 	{
@@ -190,13 +198,12 @@ void Emiter::PostUpdate(float dt) {
 
 void Emiter::Desactivate()
 {
-	int numParticles = particleVector.size();
+	active = false;
+}
 
-	for (int i = 0; i < numParticles; i++)
-	{
-		particleVector[i].Desactivate();
-	}
-
+void Emiter::Activate()
+{
+	active = true;
 }
 
 
@@ -217,7 +224,7 @@ void Emiter::ThrowParticles() {
 
 			if ((int)particlesEmited == emited)
 				break;
-			
+
 		}
 
 		particlesEmited -= emited;
@@ -317,7 +324,7 @@ float Emiter::GenerateAngularSpeed()
 }
 
 
-void Emiter::GetPosition(int &x, int &y)
+void Emiter::GetPosition(int& x, int& y)
 {
 	x = position[0];
 	y = position[1];
