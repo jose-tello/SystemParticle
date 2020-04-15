@@ -41,12 +41,13 @@ public:
 	
 	bool Activate(float x, float y, float speedX, float speedY, float accX, float accY, float angularSpeed);
 
+	void Desactivate();
+
 private:
 	void Move(float dt);
 	void Draw(float dt);
 
 	void CheckLife(float dt);
-	void Desactivate();
 
 private:
 	SDL_Texture* texture;

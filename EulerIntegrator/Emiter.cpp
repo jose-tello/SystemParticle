@@ -188,6 +188,18 @@ void Emiter::PostUpdate(float dt) {
 }
 
 
+void Emiter::Desactivate()
+{
+	int numParticles = particleVector.size();
+
+	for (int i = 0; i < numParticles; i++)
+	{
+		particleVector[i].Desactivate();
+	}
+
+}
+
+
 void Emiter::ThrowParticles() {
 
 	particlesEmited += particlesPerFrame;

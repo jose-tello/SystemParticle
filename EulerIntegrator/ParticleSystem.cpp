@@ -54,6 +54,13 @@ void ParticleSystem::PushEmiter(Emiter& emiter)
 
 void ParticleSystem::Desactivate()
 {
+	int numEmiters = emiterVector.size();
+
+	for (int i = 0; i < numEmiters; i++)
+	{
+		emiterVector[i].Desactivate();
+	}
+
 	active = false;
 }
 
