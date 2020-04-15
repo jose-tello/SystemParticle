@@ -44,13 +44,6 @@ enum update_status
 	UPDATE_ERROR
 };
 
-enum collision_flag : uint16
-{
-	COLLISION_NONE = 0x000,
-	COLLISION_FRONT = 0x001,
-	COLLISION_BACK = 0x002
-};
-
 
 // Configuration -----------
 #define SCREEN_WIDTH 720
@@ -61,12 +54,6 @@ enum collision_flag : uint16
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
-#define TITLE "EULER_INTEGRATOR: AIMBOT "
-#define ORGANIZATION " UPC - PHYSICS 2"
+#define TITLE "Particle system "
+#define ORGANIZATION " UPC"
 #define MAX_OBJECTS 150
-
-// Fisics defines
-#define AERODINAMIC_COEFICIENT 1.05
-#define RESTITUTION_COEFICIENT 0.9
-
-#define GRAVITY {0,300.f}
