@@ -84,6 +84,8 @@ Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float par
 
 void Emiter::Start()
 {
+	//TODO 3: Just calculate the max number of particles you will have in screen
+	//particles rate * particles life time
 	int maxParticles = particlesRate * particlesLifeTime + 1;
 
 	//We assume that the game will allways go at 60 FPS
@@ -96,7 +98,7 @@ void Emiter::Start()
 		CreateParticle();
 	}
 
-
+	//Set all the bools to check what variables will be randomized in the Generate() functions
 	if (areaOfSpawn == nullptr)
 	{
 		randomizePosX = false;
@@ -207,8 +209,10 @@ void Emiter::Activate()
 }
 
 
+//This funtions activates the necesary particles and gives them the initial values
 void Emiter::ThrowParticles() {
 
+	//You could use delta time instead of particlesPerFrame, but i dont recommend it
 	particlesEmited += particlesPerFrame;
 
 	if (particlesEmited >= 1)
@@ -217,11 +221,15 @@ void Emiter::ThrowParticles() {
 
 		for (int i = 0; i < particleVector.size(); i++)
 		{
+			//TODO 2: Call Activate(), use Generate...() functions to get the parameters Activate() needs.
+			//Activate returns false if the particle is already active, and true if we activate it.
+
 			if (particleVector[i].Activate(GeneratePosX(), GeneratePosY(), GenerateSpeedX(), GenerateSpeedY(), GenerateAccelerationX(), GenerateAccelerationY(), GenerateAngularSpeed()))
 			{
 				emited++;
 			}
 
+			//If we activated the necesary particles this frame, break
 			if ((int)particlesEmited == emited)
 				break;
 

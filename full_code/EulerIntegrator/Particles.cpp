@@ -6,7 +6,12 @@
 #include "Textures.h"
 #include "Input.h"
 
-ModuleParticles::ModuleParticles(bool start_enabled) : Module(start_enabled)
+ModuleParticles::ModuleParticles(bool start_enabled) : 
+	
+	Module(start_enabled),
+	particleSystem(nullptr),
+	rect{0, 0, 0, 0},
+	rect2{0, 0, 0, 0}
 {}
 
 ModuleParticles::~ModuleParticles()
@@ -23,12 +28,14 @@ bool ModuleParticles::Start()
 	Animation anim;
 	anim.PushBack(SDL_Rect{ 0, 0, 10, 10 }, 1, 0, 0);
 
-	Emiter emiter(80, 90, 2, 2, 15, -5, 0, 0, 2, 1, 5, 0, 50, 1, nullptr, App->textures->Load("particleTextures/redParticle.png"), anim, true);
+	//TODO 4: Create an emiter and push it to the particle system
 
-	particleSystem->PushEmiter(emiter);
+	//Emiter emiter(80, 90, 2, 2, 15, -5, 0, 0, 2, 1, 5, 0, 50, 1, nullptr, App->textures->Load("particleTextures/redParticle.png"), anim, true);
+
+	//particleSystem->PushEmiter(emiter);
 	
-
-	/*
+	//TODO 5: Uncomment this :D
+	
 	SDL_Texture* snowball = App->textures->Load("particleTextures/bolaNieve.png");
 
 	Animation anim1;
@@ -48,14 +55,13 @@ bool ModuleParticles::Start()
 	Emiter emiterMidSnowBall2   (20, 0, 2, 2, 3, -2, 0, 0, 0, 1, 5, 0, 8, 3.5, &rect2, snowball, anim2, true);
 	Emiter emiterLittleSnowBall2(20, 0, 3, 2, 3, -2, 0, 0, 0, 1, 5, 0, 8, 3.5, &rect2, snowball, anim3, true);
 	
-	//particleSystem->PushEmiter(emiter2);
 	particleSystem->PushEmiter(emiterBigSnowBall);
 	particleSystem->PushEmiter(emiterMidSnowBall);
 	particleSystem->PushEmiter(emiterLittleSnowBall);
 
 	particleSystem->PushEmiter(emiterBigSnowBall2);
 	particleSystem->PushEmiter(emiterMidSnowBall2);
-	particleSystem->PushEmiter(emiterLittleSnowBall2);*/
+	particleSystem->PushEmiter(emiterLittleSnowBall2);
 
 	return true;
 }

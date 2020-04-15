@@ -35,7 +35,7 @@ private:
 	void CreateParticle();
 	void ThrowParticles();
 
-	//Generate functions, used in Throw
+	//Generate functions, used in ThrowParticles
 	float GeneratePosX();
 	float GeneratePosY();
 

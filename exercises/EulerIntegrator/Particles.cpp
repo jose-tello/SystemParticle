@@ -21,8 +21,9 @@ bool ModuleParticles::Start()
 	Animation anim;
 	anim.PushBack(SDL_Rect{ 0, 0, 10, 10 }, 1, 0, 0);
 
-	//TODO 4
-	//Create an emiter and push it to the particle system
+	SDL_Texture* tex = App->textures->Load("particleTextures/redParticle.png");
+
+	//TODO 4: Create an emiter and push it to the particle system
 	
 
 	//TODO 5
