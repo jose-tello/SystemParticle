@@ -34,7 +34,7 @@ void ParticleSystem::Update(float dt)
 
 void ParticleSystem::PostUpdate(float dt) 
 {
-	if (active)
+	if (active) 
 	{
 		int numEmiters = emiterVector.size();
 
