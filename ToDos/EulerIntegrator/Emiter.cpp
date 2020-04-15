@@ -86,7 +86,6 @@ void Emiter::Start()
 {
 	//TODO 3
 	//Just calculate the max number of particles you will have in screen
-	//the rate of the particles * the particles life time
 	int maxParticles = 0;
 
 	//We assume that the game will allways go at 60 FPS
