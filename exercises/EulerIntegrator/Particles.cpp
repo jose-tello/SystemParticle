@@ -6,7 +6,12 @@
 #include "Textures.h"
 #include "Input.h"
 
-ModuleParticles::ModuleParticles(bool start_enabled) : Module(start_enabled)
+ModuleParticles::ModuleParticles(bool start_enabled) : 
+	
+	Module(start_enabled),
+	particleSystem(nullptr),
+	rect{ 0, 0, 0, 0 },
+	rect2{ 0, 0, 0, 0 }
 {}
 
 ModuleParticles::~ModuleParticles()
