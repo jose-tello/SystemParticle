@@ -39,8 +39,8 @@ public:
 	void Update(float dt);
 	void PostUpdate(float dt);
 	
-	bool Activate(float x, float y, float speedX, float speedY, float accX, float accY, float angularSpeed);
-
+	bool Activate();
+	void Reset(float x, float y, float speedX, float speedY, float accX, float accY, float angularSpeed);
 	void Desactivate();
 
 private:

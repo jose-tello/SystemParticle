@@ -4,11 +4,11 @@
 #include "Render.h"
 
 
-Particle::Particle() 
+Particle::Particle()
 {}
 
 
-Particle::Particle(std::vector<float> &position, std::vector<float> &speed, std::vector<float> &acceleration, 
+Particle::Particle(std::vector<float>& position, std::vector<float>& speed, std::vector<float>& acceleration,
 	float angle, float angularSpeed, float life, SDL_Texture* texture, Animation animation, bool fade) :
 
 	position(position),
@@ -25,15 +25,15 @@ Particle::Particle(std::vector<float> &position, std::vector<float> &speed, std:
 
 	fade(fade),
 	active(false)
-	
+
 {}
 
 
 Particle::Particle(float life, SDL_Texture* texture, Animation animation, bool fade) :
 
-	position{NULL, NULL},
-	speed{NULL, NULL},
-	acceleration{NULL, NULL},
+	position{ NULL, NULL },
+	speed{ NULL, NULL },
+	acceleration{ NULL, NULL },
 	angle(0),
 	angularSpeed(0),
 
@@ -49,11 +49,11 @@ Particle::Particle(float life, SDL_Texture* texture, Animation animation, bool f
 
 
 
-Particle::Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY, 
+Particle::Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY,
 	float angle, float angularSpeed, float life, SDL_Texture* texture, Animation animation, bool fade) :
 
 	position{ positionX, positionY },
-	speed{ speedX, speedY},
+	speed{ speedX, speedY },
 	acceleration{ accelerationX, accelerationY },
 	angle(angle),
 	angularSpeed(angularSpeed),
@@ -74,7 +74,7 @@ Particle::~Particle()
 	position.clear();
 	speed.clear();
 	acceleration.clear();
-	
+
 	texture = nullptr;
 }
 
@@ -114,7 +114,7 @@ SDL_Texture* Particle::GetTexture() {
 }
 
 
-void Particle::SetPosition(std::vector<float> &pos) {
+void Particle::SetPosition(std::vector<float>& pos) {
 	position = pos;
 }
 
@@ -149,14 +149,14 @@ void Particle::Update(float dt)
 }
 
 
-void Particle::PostUpdate(float dt) 
+void Particle::PostUpdate(float dt)
 {
 	if (active)
 		Draw(dt);
 }
 
 
-void Particle::Draw(float dt) 
+void Particle::Draw(float dt)
 {
 	if (fade == true)
 	{
@@ -166,10 +166,10 @@ void Particle::Draw(float dt)
 
 	else
 		App->renderer->Blit(texture, position[0], position[1], &animation.GetCurrentFrameBox(dt), 255, 0, angle);
-	
+
 }
 
-void Particle::Move(float dt) 
+void Particle::Move(float dt)
 {
 	speed[0] += acceleration[0] * dt * TIME_CONST;
 	speed[1] += acceleration[1] * dt * TIME_CONST;
@@ -181,8 +181,8 @@ void Particle::Move(float dt)
 	angle += angularSpeed * dt * TIME_CONST;
 }
 
- 
-void Particle::CheckLife(float dt) 
+
+void Particle::CheckLife(float dt)
 {
 	life -= dt;
 
@@ -193,33 +193,32 @@ void Particle::CheckLife(float dt)
 }
 
 
-void Particle::Desactivate() 
+void Particle::Desactivate()
 {
 	active = false;
 }
 
 
-bool Particle::Activate(float x, float y, float speedX, float speedY, float accX, float accY, float angSpeed) 
+bool Particle::Activate()
 {
-	if (active)
-		return false;
+	return !active;
+}
 
-	else
-	{
-		life = originalLife;
 
-		position[0] = x;
-		position[1] = y;
+void Particle::Reset(float x, float y, float speedX, float speedY, float accX, float accY, float angSpeed)
+{
+	life = originalLife;
 
-		speed[0] = speedX;
-		speed[1] = speedY;
+	position[0] = x;
+	position[1] = y;
 
-		acceleration[0] = accX;
-		acceleration[1] = accY;
+	speed[0] = speedX;
+	speed[1] = speedY;
 
-		angularSpeed = angSpeed;
+	acceleration[0] = accX;
+	acceleration[1] = accY;
 
-		active = true;
-		return true;
-	}
+	angularSpeed = angSpeed;
+
+	active = true;
 }
