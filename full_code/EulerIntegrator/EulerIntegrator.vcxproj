@@ -147,6 +147,7 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="p2Defs.h" />
     <ClInclude Include="p2Log.h" />
+    <ClInclude Include="p2Point.h" />
     <ClInclude Include="p2SString.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Particles.h" />

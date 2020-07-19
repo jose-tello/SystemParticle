@@ -1,4 +1,7 @@
-#pragma once
+#ifndef __PARTICLE_SYSTEM_H__
+#define __PARTICLE_SYSTEM_H__
+
+#include "p2Point.h"
 #include "vector"
 
 class Emiter;
@@ -25,8 +28,9 @@ public:
 
 private:
 	std::vector<Emiter> emiterVector;
-	std::vector<float>	position;
+	fMPoint	position;
 
 	bool active;
 };
 
+#endif //__PARTICLE_SYSTEM_H__

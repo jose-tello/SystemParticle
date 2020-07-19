@@ -1,6 +1,8 @@
-#pragma once
+#ifndef __EMITER_H__
+#define __EMITER_H__
 
 #include "vector"
+#include "p2Point.h"
 #include "Animation.h"
 
 #define FPS 60
@@ -12,7 +14,7 @@ struct SDL_Texture;
 class Emiter
 {
 public:
-	Emiter(std::vector<float> &position, std::vector<float> &particleSpeed, std::vector<int> &particleVariationSpeed, std::vector<float> &particleAcceleration, std::vector<int>& particleVariationAcceleration, 
+	Emiter(fMPoint &position, fMPoint &particleSpeed, iMPoint &particleVariationSpeed, fMPoint &particleAcceleration, iMPoint& particleVariationAcceleration, 
 		   float particleAngularSpeed, int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade);
 
 	Emiter(float positionX, float positionY, float particleSpeedX, float particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY, float particleAccelerationX,
@@ -48,14 +50,14 @@ private:
 	float GenerateAngularSpeed();
 
 private:
-	std::vector<float> position;
-	std::vector<float> particleSpeed;
-	std::vector<float> particleAcceleration;
+	fMPoint position;
+	fMPoint particleSpeed;
+	fMPoint particleAcceleration;
 
 	float particleAngularSpeed;
 
-	std::vector<int> particleVariationSpeed;
-	std::vector<int> particleVariationAcceleration;
+	iMPoint particleVariationSpeed;
+	iMPoint particleVariationAcceleration;
 	int particleVariationAngularSpeed;
 
 
@@ -86,3 +88,5 @@ private:
 
 	bool active;
 };
+
+#endif //__EMITER_H__

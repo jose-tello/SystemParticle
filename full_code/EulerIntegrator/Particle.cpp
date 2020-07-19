@@ -8,27 +8,6 @@ Particle::Particle()
 {}
 
 
-Particle::Particle(std::vector<float>& position, std::vector<float>& speed, std::vector<float>& acceleration,
-	float angle, float angularSpeed, float life, SDL_Texture* texture, Animation animation, bool fade) :
-
-	position(position),
-	speed(speed),
-	acceleration(acceleration),
-	angle(angle),
-	angularSpeed(angularSpeed),
-
-	life(life),
-	originalLife(life),
-
-	texture(texture),
-	animation(animation),
-
-	fade(fade),
-	active(false)
-
-{}
-
-
 Particle::Particle(float life, SDL_Texture* texture, Animation animation, bool fade) :
 
 	position{ NULL, NULL },
@@ -71,25 +50,21 @@ Particle::Particle(float positionX, float positionY, float speedX, float speedY,
 
 Particle::~Particle()
 {
-	position.clear();
-	speed.clear();
-	acceleration.clear();
-
 	texture = nullptr;
 }
 
 
-std::vector<float> Particle::GetPosition() {
+fMPoint Particle::GetPosition() {
 	return position;
 }
 
 
-std::vector<float> Particle::GetSpeed() {
+fMPoint Particle::GetSpeed() {
 	return speed;
 }
 
 
-std::vector<float> Particle::GetAcceleration() {
+fMPoint Particle::GetAcceleration() {
 	return acceleration;
 }
 
@@ -114,17 +89,17 @@ SDL_Texture* Particle::GetTexture() {
 }
 
 
-void Particle::SetPosition(std::vector<float>& pos) {
+void Particle::SetPosition(fMPoint &pos) {
 	position = pos;
 }
 
 
-void Particle::SetSpeed(std::vector<float>& spd) {
+void Particle::SetSpeed(fMPoint &spd) {
 	speed = spd;
 }
 
 
-void Particle::SetAcceleration(std::vector<float>& acc) {
+void Particle::SetAcceleration(fMPoint &acc) {
 	acceleration = acc;
 }
 
@@ -161,22 +136,22 @@ void Particle::Draw(float dt)
 	if (fade == true)
 	{
 		Uint8 transparency = life / originalLife * 255;
-		App->renderer->Blit(texture, position[0], position[1], &animation.GetCurrentFrameBox(dt), transparency, 0, angle);
+		App->renderer->Blit(texture, position.x, position.y, &animation.GetCurrentFrameBox(dt), transparency, 0, angle);
 	}
 
 	else
-		App->renderer->Blit(texture, position[0], position[1], &animation.GetCurrentFrameBox(dt), 255, 0, angle);
+		App->renderer->Blit(texture, position.x, position.y, &animation.GetCurrentFrameBox(dt), 255, 0, angle);
 
 }
 
 void Particle::Move(float dt)
 {
-	speed[0] += acceleration[0] * dt * TIME_CONST;
-	speed[1] += acceleration[1] * dt * TIME_CONST;
+	speed.x += acceleration.x * dt * TIME_CONST;
+	speed.y += acceleration.y * dt * TIME_CONST;
 
 	//TODO 1: Do the same with position and angles
-	position[0] += speed[0] * dt * TIME_CONST;
-	position[1] += speed[1] * dt * TIME_CONST;
+	position.x += speed.x * dt * TIME_CONST;
+	position.y += speed.y * dt * TIME_CONST;
 
 	angle += angularSpeed * dt * TIME_CONST;
 }
@@ -209,14 +184,14 @@ void Particle::Reset(float x, float y, float speedX, float speedY, float accX, f
 {
 	life = originalLife;
 
-	position[0] = x;
-	position[1] = y;
+	position.x = x;
+	position.y = y;
 
-	speed[0] = speedX;
-	speed[1] = speedY;
+	speed.x = speedX;
+	speed.y = speedY;
 
-	acceleration[0] = accX;
-	acceleration[1] = accY;
+	acceleration.x = accX;
+	acceleration.y = accY;
 
 	angularSpeed = angSpeed;
 

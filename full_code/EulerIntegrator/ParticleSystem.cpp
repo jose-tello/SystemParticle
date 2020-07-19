@@ -81,8 +81,8 @@ bool ParticleSystem::IsActive()
 //Move the particle system, and its emiters in relation to the particle system
 void ParticleSystem::Move(int x, int y)
 {
-	int previousX = position[0];
-	int previousY = position[1];
+	int previousX = position.x;
+	int previousY = position.y;
 
 	int xPos, yPos;
 
@@ -101,6 +101,6 @@ void ParticleSystem::Move(int x, int y)
 		}
 	}
 
-	position[0] = x;
-	position[1] = y;
+	position.x = x;
+	position.y = y;
 }
