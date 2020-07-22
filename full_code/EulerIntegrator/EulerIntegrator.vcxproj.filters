@@ -19,6 +19,9 @@
     <Filter Include="ParticleSystem">
       <UniqueIdentifier>{2ab4f990-3f2f-4649-a18d-4e6a0799417f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Animation">
+      <UniqueIdentifier>{e670f647-1803-43cb-9b98-d96b8827792f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -62,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Resource Files\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,11 +122,14 @@
     <ClInclude Include="ParticleSystem.h">
       <Filter>ParticleSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
     <ClInclude Include="p2Point.h">
       <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Resource Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Resource Files\Animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
