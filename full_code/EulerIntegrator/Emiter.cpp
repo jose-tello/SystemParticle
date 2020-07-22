@@ -139,7 +139,7 @@ void Emiter::Start()
 
 void Emiter::CreateParticle()
 {
-	particleVector.push_back(Particle(particlesLifeTime, particleTexture, particleAnimation, fadeParticles));
+	particleVector.push_back(Particle(particlesLifeTime, fadeParticles));
 }
 
 
@@ -170,13 +170,7 @@ void Emiter::Update(float dt)
 
 void Emiter::PostUpdate(float dt) 
 {
-	int numParticles = particleVector.size();
-
-	for (int i = 0; i < numParticles; i++)
-	{
-		particleVector[i].PostUpdate(dt);
-	}
-
+	DrawParticles();
 }
 
 
@@ -206,7 +200,7 @@ void Emiter::ThrowParticles() {
 			//TODO 2: Call Activate(), use Generate...() functions to get the parameters Activate() needs.
 			//Activate returns false if the particle is already active, and true if we activate it.
 
-			if (particleVector[i].Activate())
+			if (particleVector[i].IsActive() == false)
 			{
 				particleVector[i].Reset(GeneratePosX(), GeneratePosY(), GenerateSpeedX(), GenerateSpeedY(), GenerateAccelerationX(), GenerateAccelerationY(), GenerateAngularSpeed());
 				emited++;
@@ -219,6 +213,33 @@ void Emiter::ThrowParticles() {
 		}
 
 		particlesEmited -= emited;
+	}
+}
+
+
+void Emiter::DrawParticles()
+{
+	fMPoint pos;
+	float angle;
+	float lifeTime;
+
+	int numParticles = particleVector.size();
+
+	for (int i = 0; i < numParticles; i++)
+	{
+		if (particleVector[i].IsActive())
+		{
+			particleVector[i].GetDrawVariables(pos, angle, lifeTime);
+
+			if (fadeParticles == true)
+			{
+				Uint8 transparency = lifeTime / particlesLifeTime * 255;
+				App->renderer->Blit(particleTexture, pos.x, pos.y, &particleAnimation.GetFrameBox(particlesLifeTime - lifeTime), transparency, 0, angle);
+			}
+
+			else
+				App->renderer->Blit(particleTexture, pos.x, pos.y, &particleAnimation.GetFrameBox(particlesLifeTime - lifeTime), 255, 0, angle);
+		}
 	}
 }
 

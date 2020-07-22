@@ -3,71 +3,64 @@
 #ifndef __ANIMATION_H__
 #define __ANIMATION_H__
 
+#include "vector"
 #include "SDL/include/SDL_rect.h"
 #include "Application.h"
-
-#define MAX_FRAMES 55
 
 class Frame
 {
 public:
-	float maxFrames;
-
+	Frame(SDL_Rect rect, int pivotPosX, int pivotPosY) : frame(rect), pivotPositionX(pivotPosX), pivotPositionY(pivotPosY) {}
 	SDL_Rect frame;
 
 	int pivotPositionX;
 	int pivotPositionY;
-
-private:
-	int lastCollider = 0;
-
-public:
-
-
 };
 
 class Animation
 {
 public:
 	bool loop = true;
-	Frame frames[MAX_FRAMES];
+	std::vector<Frame> frames;
 
 private:
-	float framesPassed = 0;
+	float timePassed = 0;
+	int maxFrames = 0;
 	int currentFrame = 0;
-	int lastFrame = 0;
 	int loops = 0;
 
 public:
 
 
-	void PushBack(const SDL_Rect& rect, const int maxFrames, int pivotPositionX, int pivotPositionY) {
-
-		frames[lastFrame].frame = rect;
-		frames[lastFrame].maxFrames = maxFrames;
-		frames[lastFrame].pivotPositionX = pivotPositionX;
-		frames[lastFrame].pivotPositionY = pivotPositionY;
-
-
-		lastFrame++;
+	void PushBack(const SDL_Rect& rect, const int maxFr, int pivotPositionX, int pivotPositionY) 
+	{
+		for (int i = 0; i < maxFr; i++)
+		{
+			frames.push_back(Frame(rect, pivotPositionX, pivotPositionY));
+		}
+		maxFrames += maxFr;
 	}
 
 
 	Frame& GetCurrentFrame(float dt)
 	{
-		if (framesPassed * dt < frames[currentFrame].maxFrames * dt)
-			framesPassed += dt;
-		else
+		if (timePassed < maxFrames * dt)
 		{
-			framesPassed = 0;
-			currentFrame++;
+			timePassed += dt;
+			currentFrame = timePassed / 0.016;
 		}
 
-
-		if (currentFrame >= lastFrame)
+		if (currentFrame >= maxFrames)
 		{
-			currentFrame = (loop) ? 0.0f : lastFrame - 1;
-			loops++;
+			if (loop)
+			{
+				currentFrame = 0;
+				timePassed = 0.0f;
+				loops++;
+			}
+
+			else
+				currentFrame = frames.size() - 1;
 		}
 
 
@@ -75,9 +68,31 @@ public:
 	}
 
 
+	Frame& GetFrame(float time)
+	{
+		float timer = time;
+		int actualFrame = timer / 0.016;
+		
+
+		if (actualFrame >= maxFrames)
+		{
+			return frames[maxFrames - 1];
+		}
+
+
+		return frames[actualFrame];
+	}
+
+
 	SDL_Rect& GetCurrentFrameBox(float dt)
 	{
 		return GetCurrentFrame(dt).frame;
+	}
+
+
+	SDL_Rect& GetFrameBox(float time)
+	{
+		return GetFrame(time).frame;
 	}
 
 
@@ -95,8 +110,7 @@ public:
 
 	void ResetAnimation()
 	{
-		framesPassed = 0;
-		lastFrame = 0;
+		timePassed = 0;
 		currentFrame = 0;
 	}
 

@@ -78,6 +78,7 @@ bool ParticleSystem::IsActive()
 	return active;
 }
 
+
 //Move the particle system, and its emiters in relation to the particle system
 void ParticleSystem::Move(int x, int y)
 {

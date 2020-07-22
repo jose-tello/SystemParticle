@@ -34,8 +34,10 @@ public:
 
 private:
 	void Start();
+
 	void CreateParticle();
 	void ThrowParticles();
+	void DrawParticles();
 
 	//Generate functions, used in ThrowParticles
 	float GeneratePosX();

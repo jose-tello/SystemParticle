@@ -10,8 +10,8 @@ class Particle
 {
 public:
 	Particle();
-	Particle(float life, SDL_Texture* texture, Animation animation, bool fade = false); //The emiter uses this constructor
-	Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY, float angle, float angularSpeed, float life, SDL_Texture* texture, Animation animation, bool fade = false);
+	Particle(float life, bool fade = false); //The emiter uses this constructor
+	Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY, float angle, float angularSpeed, float life, bool fade = false);
 	~Particle();
 
 	//Getters and setters
@@ -23,7 +23,6 @@ public:
 	float GetAngularSpeed();
 
 	float GetLife();
-	SDL_Texture* GetTexture();
 
 	void SetPosition(fMPoint &);
 	void SetSpeed(fMPoint &);
@@ -34,21 +33,18 @@ public:
 
 	//the actual useful functions
 	void Update(float dt);
-	void PostUpdate(float dt);
+	void GetDrawVariables(fMPoint &, float &, float &);
 	
-	bool Activate();
+	bool IsActive();
 	void Reset(float x, float y, float speedX, float speedY, float accX, float accY, float angularSpeed);
 	void Desactivate();
 
 private:
 	void Move(float dt);
-	void Draw(float dt);
 
 	void CheckLife(float dt);
 
 private:
-	SDL_Texture* texture;
-	Animation animation;
 
 	fMPoint position; // 0 is the x axis, and 1 the y axis
 	fMPoint speed;

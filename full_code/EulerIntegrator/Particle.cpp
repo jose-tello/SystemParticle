@@ -8,7 +8,7 @@ Particle::Particle()
 {}
 
 
-Particle::Particle(float life, SDL_Texture* texture, Animation animation, bool fade) :
+Particle::Particle(float life, bool fade) :
 
 	position{ NULL, NULL },
 	speed{ NULL, NULL },
@@ -19,9 +19,6 @@ Particle::Particle(float life, SDL_Texture* texture, Animation animation, bool f
 	life(life),
 	originalLife(life),
 
-	texture(texture),
-	animation(animation),
-
 	fade(fade),
 	active(false)
 {}
@@ -29,7 +26,7 @@ Particle::Particle(float life, SDL_Texture* texture, Animation animation, bool f
 
 
 Particle::Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY,
-	float angle, float angularSpeed, float life, SDL_Texture* texture, Animation animation, bool fade) :
+	float angle, float angularSpeed, float life, bool fade) :
 
 	position{ positionX, positionY },
 	speed{ speedX, speedY },
@@ -40,9 +37,6 @@ Particle::Particle(float positionX, float positionY, float speedX, float speedY,
 	life(life),
 	originalLife(life),
 
-	texture(texture),
-	animation(animation),
-
 	fade(fade),
 	active(false)
 {}
@@ -50,7 +44,6 @@ Particle::Particle(float positionX, float positionY, float speedX, float speedY,
 
 Particle::~Particle()
 {
-	texture = nullptr;
 }
 
 
@@ -81,11 +74,6 @@ float Particle::GetAngularSpeed() {
 
 float Particle::GetLife() {
 	return life;
-}
-
-
-SDL_Texture* Particle::GetTexture() {
-	return texture;
 }
 
 
@@ -124,14 +112,15 @@ void Particle::Update(float dt)
 }
 
 
-void Particle::PostUpdate(float dt)
+void Particle::GetDrawVariables(fMPoint &pos, float &ang, float &lifeTime)
 {
-	if (active)
-		Draw(dt);
+	pos = position;
+	ang = angle;
+	lifeTime = life;
 }
 
 
-void Particle::Draw(float dt)
+/*void Particle::Draw(float dt)
 {
 	if (fade == true)
 	{
@@ -142,7 +131,7 @@ void Particle::Draw(float dt)
 	else
 		App->renderer->Blit(texture, position.x, position.y, &animation.GetCurrentFrameBox(dt), 255, 0, angle);
 
-}
+}*/
 
 void Particle::Move(float dt)
 {
@@ -174,9 +163,9 @@ void Particle::Desactivate()
 }
 
 
-bool Particle::Activate()
+bool Particle::IsActive()
 {
-	return !active;
+	return active;
 }
 
 

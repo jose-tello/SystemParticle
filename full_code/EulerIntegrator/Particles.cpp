@@ -39,7 +39,10 @@ bool ModuleParticles::Start()
 	SDL_Texture* snowball = App->textures->Load("particleTextures/bolaNieve.png");
 
 	Animation anim1;
-	anim1.PushBack(SDL_Rect{ 0, 0, 10, 10 }, 1, 0, 0);
+	anim1.PushBack(SDL_Rect{ 0, 0, 10, 10 }, 60, 0, 0);
+	anim1.PushBack(SDL_Rect{ 7, 11, 8, 8 }, 60, 0, 0);
+	anim1.PushBack(SDL_Rect{ 0, 12, 6, 6 }, 60, 0, 0);
+	
 
 	Animation anim2;
 	anim2.PushBack(SDL_Rect{ 0, 12, 6, 6 }, 1, 0, 0);
@@ -47,13 +50,13 @@ bool ModuleParticles::Start()
 	Animation anim3;
 	anim3.PushBack(SDL_Rect{ 7, 11, 8, 8 }, 1, 0, 0);
 
-	Emiter emiterBigSnowBall   (0, 20, 2, 2, 2, -3, 0, 0, 0, 1, 5, 0, 6, 3.5, &rect, snowball, anim1, true);
-	Emiter emiterMidSnowBall   (0, 20, 2, 2, 3, -2, 0, 0, 0, 1, 5, 0, 8, 3.5, &rect, snowball, anim2, true);
-	Emiter emiterLittleSnowBall(0, 20, 3, 2, 3, -2, 0, 0, 0, 1, 5, 0, 8, 3.5, &rect, snowball, anim3, true);
+	Emiter emiterBigSnowBall   (0, 20, 2, 2, 2, -3, 0, 0, 0, 1, 5, 0, 60, 3.5, &rect, snowball, anim1, true);
+	Emiter emiterMidSnowBall   (0, 20, 2, 2, 3, -2, 0, 0, 0, 1, 5, 0, 80, 3.5, &rect, snowball, anim1, true);
+	Emiter emiterLittleSnowBall(0, 20, 3, 2, 3, -2, 0, 0, 0, 1, 5, 0, 80, 3.5, &rect, snowball, anim1, true);
 
-	Emiter emiterBigSnowBall2   (20, 0, 2, 2, 2, -3, 0, 0, 0, 1, 5, 0, 6, 3.5, &rect2, snowball, anim1, true);
-	Emiter emiterMidSnowBall2   (20, 0, 2, 2, 3, -2, 0, 0, 0, 1, 5, 0, 8, 3.5, &rect2, snowball, anim2, true);
-	Emiter emiterLittleSnowBall2(20, 0, 3, 2, 3, -2, 0, 0, 0, 1, 5, 0, 8, 3.5, &rect2, snowball, anim3, true);
+	Emiter emiterBigSnowBall2   (20, 0, 2, 2, 2, -3, 0, 0, 0, 1, 5, 0, 60, 3.5, &rect2, snowball, anim1, true);
+	Emiter emiterMidSnowBall2   (20, 0, 2, 2, 3, -2, 0, 0, 0, 1, 5, 0, 80, 3.5, &rect2, snowball, anim1, true);
+	Emiter emiterLittleSnowBall2(20, 0, 3, 2, 3, -2, 0, 0, 0, 1, 5, 0, 80, 3.5, &rect2, snowball, anim1, true);
 	
 	particleSystem->PushEmiter(emiterBigSnowBall);
 	particleSystem->PushEmiter(emiterMidSnowBall);
