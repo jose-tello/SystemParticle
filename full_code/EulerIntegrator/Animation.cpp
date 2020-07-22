@@ -24,7 +24,6 @@ Frame& Animation::GetCurrentFrame(float dt)
 		{
 			currentFrame = 0;
 			timePassed = 0.0f;
-			loops++;
 		}
 
 		else
@@ -71,12 +70,6 @@ SDL_Rect& Animation::GetFrameBox(float time)
 SDL_Rect& Animation::GetRect()
 {
 	return this->frames[0].frame;
-}
-
-
-bool Animation::Finished() const
-{
-	return loops > 0;
 }
 
 

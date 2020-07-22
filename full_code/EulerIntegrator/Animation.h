@@ -33,8 +33,6 @@ private:
 	float timePassed = 0.0f;
 	int maxFrames = 0;
 	int currentFrame = 0;
-	int loops = 0;
-
 
 };
 
