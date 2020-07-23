@@ -91,6 +91,16 @@ bool ModuleRender::CleanUp()
 	return true;
 }
 
+
+bool ModuleRender::IsInsideCamera(SDL_Rect element)
+{
+	return !((this->camera.x + this->camera.w < element.x || 
+			  element.x + element.w < this->camera.x) || 
+			 (this->camera.y + this->camera.h < element.y ||
+			  element.y + element.h < this->camera.y));
+}
+
+
 // Blit to screen
 bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, Uint8 alpha, float speed, double angle, int pivot_x, int pivot_y )
 {

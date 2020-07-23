@@ -222,6 +222,7 @@ void Emiter::DrawParticles()
 	fMPoint pos;
 	float angle;
 	float lifeTime;
+	SDL_Rect rect;
 
 	int numParticles = particleVector.size();
 
@@ -230,15 +231,22 @@ void Emiter::DrawParticles()
 		if (particleVector[i].IsActive())
 		{
 			particleVector[i].GetDrawVariables(pos, angle, lifeTime);
+			rect = particleAnimation.GetFrameBox(particlesLifeTime - lifeTime);
 
-			if (fadeParticles == true)
+			if (App->renderer->IsInsideCamera(rect))
 			{
-				Uint8 transparency = lifeTime / particlesLifeTime * 255;
-				App->renderer->Blit(particleTexture, pos.x, pos.y, &particleAnimation.GetFrameBox(particlesLifeTime - lifeTime), transparency, 0, angle);
-			}
+				particleVector[i].GetDrawVariables(pos, angle, lifeTime);
 
-			else
-				App->renderer->Blit(particleTexture, pos.x, pos.y, &particleAnimation.GetFrameBox(particlesLifeTime - lifeTime), 255, 0, angle);
+				if (fadeParticles == true)
+				{
+					Uint8 transparency = lifeTime / particlesLifeTime * 255;
+					App->renderer->Blit(particleTexture, pos.x, pos.y, &rect, transparency, 0, angle);
+				}
+
+				else
+					App->renderer->Blit(particleTexture, pos.x, pos.y, &rect, 255, 0, angle);
+			}
+			
 		}
 	}
 }
