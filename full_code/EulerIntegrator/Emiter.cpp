@@ -125,7 +125,6 @@ void Emiter::Start()
 	if (particleVariationSpeed.y == NULL)
 		randomizeSpeedY = false;
 
-
 	if (particleVariationAcceleration.x == NULL)
 		randomizeAccelerationX = false;
 
@@ -139,7 +138,7 @@ void Emiter::Start()
 
 void Emiter::CreateParticle()
 {
-	particleVector.push_back(Particle(particlesLifeTime, fadeParticles));
+	particleVector.push_back(Particle());
 }
 
 
@@ -202,7 +201,7 @@ void Emiter::ThrowParticles() {
 
 			if (particleVector[i].IsActive() == false)
 			{
-				particleVector[i].Reset(GeneratePosX(), GeneratePosY(), GenerateSpeedX(), GenerateSpeedY(), GenerateAccelerationX(), GenerateAccelerationY(), GenerateAngularSpeed());
+				particleVector[i].Reset(GeneratePosX(), GeneratePosY(), GenerateSpeedX(), GenerateSpeedY(), GenerateAccelerationX(), GenerateAccelerationY(), GenerateAngularSpeed(), particlesLifeTime);
 				emited++;
 			}
 

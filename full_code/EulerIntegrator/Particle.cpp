@@ -4,11 +4,7 @@
 #include "Render.h"
 
 
-Particle::Particle()
-{}
-
-
-Particle::Particle(float life, bool fade) :
+Particle::Particle() :
 
 	position{ NULL, NULL },
 	speed{ NULL, NULL },
@@ -16,11 +12,7 @@ Particle::Particle(float life, bool fade) :
 	angle(0),
 	angularSpeed(0),
 
-	life(life),
-	originalLife(life),
-
-	fade(fade),
-	active(false)
+	life(0.0f)
 {}
 
 
@@ -34,11 +26,7 @@ Particle::Particle(float positionX, float positionY, float speedX, float speedY,
 	angle(angle),
 	angularSpeed(angularSpeed),
 
-	life(life),
-	originalLife(life),
-
-	fade(fade),
-	active(false)
+	life(life)
 {}
 
 
@@ -104,7 +92,7 @@ void Particle::SetAngularSpeed(float aspd) {
 
 void Particle::Update(float dt)
 {
-	if (active)
+	if (life > 0)
 	{
 		Move(dt);
 		CheckLife(dt);
@@ -149,29 +137,22 @@ void Particle::Move(float dt)
 void Particle::CheckLife(float dt)
 {
 	life -= dt;
-
-	if (life < 0)
-	{
-		Desactivate();
-	}
-}
-
-
-void Particle::Desactivate()
-{
-	active = false;
 }
 
 
 bool Particle::IsActive()
 {
-	return active;
+	if (life > 0)
+		return true;
+
+	else
+		return false;
 }
 
 
-void Particle::Reset(float x, float y, float speedX, float speedY, float accX, float accY, float angSpeed)
+void Particle::Reset(float x, float y, float speedX, float speedY, float accX, float accY, float angSpeed, float lifeTime)
 {
-	life = originalLife;
+	life = lifeTime;
 
 	position.x = x;
 	position.y = y;
@@ -184,5 +165,4 @@ void Particle::Reset(float x, float y, float speedX, float speedY, float accX, f
 
 	angularSpeed = angSpeed;
 
-	active = true;
 }

@@ -9,8 +9,7 @@ struct SDL_Texture;
 class Particle
 {
 public:
-	Particle();
-	Particle(float life, bool fade = false); //The emiter uses this constructor
+	Particle(); //The emiter uses this constructor
 	Particle(float positionX, float positionY, float speedX, float speedY, float accelerationX, float accelerationY, float angle, float angularSpeed, float life, bool fade = false);
 	~Particle();
 
@@ -36,8 +35,7 @@ public:
 	void GetDrawVariables(fMPoint &, float &, float &);
 	
 	bool IsActive();
-	void Reset(float x, float y, float speedX, float speedY, float accX, float accY, float angularSpeed);
-	void Desactivate();
+	void Reset(float x, float y, float speedX, float speedY, float accX, float accY, float angularSpeed, float lifeTime);
 
 private:
 	void Move(float dt);
@@ -54,10 +52,6 @@ private:
 	float angularSpeed;//positive = right, negative = left
 
 	float life;
-	float originalLife;
-
-	bool fade;
-	bool active;
 };
 
 #endif //__PARTICLE_H__
