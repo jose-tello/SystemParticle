@@ -1,7 +1,6 @@
 #include "Particle.h"
 #include "Textures.h"
 #include "Application.h"
-#include "Render.h"
 
 
 Particle::Particle() :
