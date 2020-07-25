@@ -108,19 +108,6 @@ void Particle::GetDrawVariables(fMPoint &pos, float &ang, float &lifeTime)
 }
 
 
-/*void Particle::Draw(float dt)
-{
-	if (fade == true)
-	{
-		Uint8 transparency = life / originalLife * 255;
-		App->renderer->Blit(texture, position.x, position.y, &animation.GetCurrentFrameBox(dt), transparency, 0, angle);
-	}
-
-	else
-		App->renderer->Blit(texture, position.x, position.y, &animation.GetCurrentFrameBox(dt), 255, 0, angle);
-
-}*/
-
 void Particle::Move(float dt)
 {
 	speed.x += acceleration.x * dt * TIME_CONST;
