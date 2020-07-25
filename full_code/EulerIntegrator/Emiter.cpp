@@ -5,9 +5,10 @@
 #include "Particle.h"
 #include "math.h"
 
-Emiter::Emiter(fMPoint &position, fMPoint &particleSpeed, iMPoint &particleVariationSpeed, fMPoint &particleAcceleration, 
-	iMPoint& particleVariationAcceleration, float particleAngularSpeed, int particleVariableAngularSpeed, float particlesRate, 
+Emiter::Emiter(fMPoint& position, fMPoint& particleSpeed, iMPoint& particleVariationSpeed, fMPoint& particleAcceleration,
+	iMPoint& particleVariationAcceleration, float particleAngularSpeed, int particleVariableAngularSpeed, float particlesRate,
 	float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade) :
+
 
 	position(position),
 	particleSpeed(particleSpeed),
@@ -36,9 +37,10 @@ Emiter::Emiter(fMPoint &position, fMPoint &particleSpeed, iMPoint &particleVaria
 	randomizeAngularSpeed(true),
 
 	active(true),
+	fadeParticles(fade),
 
-	fadeParticles(fade)
-
+	particlesEmited(0.0f),
+	activeParticles(0)
 {
 	Start();
 }
@@ -75,8 +77,10 @@ Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float par
 	randomizeAngularSpeed(true),
 
 	active(true),
+	fadeParticles(fade),
 
-	fadeParticles(fade)
+	particlesEmited(0.0f),
+	activeParticles(0)
 {
 	Start();
 }
@@ -142,7 +146,7 @@ void Emiter::CreateParticle()
 }
 
 
-Emiter::~Emiter() 
+Emiter::~Emiter()
 {
 	particleVector.clear();
 
@@ -151,23 +155,26 @@ Emiter::~Emiter()
 }
 
 
-void Emiter::Update(float dt) 
+void Emiter::Update(float dt)
 {
 	if (active)
 	{
 		ThrowParticles();
 	}
 
-	int numParticles = particleVector.size();
-
-	for (int i = 0; i < numParticles; i++)
+	for (int i = 0; i < activeParticles; i++)
 	{
-		particleVector[i].Update(dt);
+		if (particleVector[i].Update(dt) == false)
+		{
+			activeParticles--;
+			particleVector[i] = particleVector[activeParticles];
+			particleVector[activeParticles].Deactivate();
+		}
 	}
 }
 
 
-void Emiter::PostUpdate(float dt) 
+void Emiter::PostUpdate(float dt)
 {
 	DrawParticles();
 }
@@ -193,22 +200,20 @@ void Emiter::ThrowParticles() {
 	if (particlesEmited >= 1)
 	{
 		int emited = 0;
+		int maxParticles = particleVector.size();
 
-		for (int i = 0; i < particleVector.size(); i++)
+		for (int i = activeParticles; i < maxParticles; i++)
 		{
 			//TODO 2: Call Activate(), use Generate...() functions to get the parameters Activate() needs.
 			//Activate returns false if the particle is already active, and true if we activate it.
 
-			if (particleVector[i].IsActive() == false)
-			{
-				particleVector[i].Reset(GeneratePosX(), GeneratePosY(), GenerateSpeedX(), GenerateSpeedY(), GenerateAccelerationX(), GenerateAccelerationY(), GenerateAngularSpeed(), particlesLifeTime);
-				emited++;
-			}
-
+			particleVector[i].Reset(GeneratePosX(), GeneratePosY(), GenerateSpeedX(), GenerateSpeedY(), GenerateAccelerationX(), GenerateAccelerationY(), GenerateAngularSpeed(), particlesLifeTime);
+			emited++;
+			activeParticles++;
+			
 			//If we activated the necesary particles this frame, break
 			if ((int)particlesEmited == emited)
 				break;
-
 		}
 
 		particlesEmited -= emited;
@@ -223,29 +228,23 @@ void Emiter::DrawParticles()
 	float lifeTime;
 	SDL_Rect rect;
 
-	int numParticles = particleVector.size();
-
-	for (int i = 0; i < numParticles; i++)
+	for (int i = 0; i < activeParticles; i++)
 	{
-		if (particleVector[i].IsActive())
+		particleVector[i].GetDrawVariables(pos, angle, lifeTime);
+		rect = particleAnimation.GetFrameBox(particlesLifeTime - lifeTime);
+
+		if (App->renderer->IsInsideCamera(rect))
 		{
 			particleVector[i].GetDrawVariables(pos, angle, lifeTime);
-			rect = particleAnimation.GetFrameBox(particlesLifeTime - lifeTime);
 
-			if (App->renderer->IsInsideCamera(rect))
+			if (fadeParticles == true)
 			{
-				particleVector[i].GetDrawVariables(pos, angle, lifeTime);
-
-				if (fadeParticles == true)
-				{
-					Uint8 transparency = lifeTime / particlesLifeTime * 255;
-					App->renderer->Blit(particleTexture, pos.x, pos.y, &rect, transparency, 0, angle);
-				}
-
-				else
-					App->renderer->Blit(particleTexture, pos.x, pos.y, &rect, 255, 0, angle);
+				Uint8 transparency = lifeTime / particlesLifeTime * 255;
+				App->renderer->Blit(particleTexture, pos.x, pos.y, &rect, transparency, 0, angle);
 			}
-			
+
+			else
+				App->renderer->Blit(particleTexture, pos.x, pos.y, &rect, 255, 0, angle);
 		}
 	}
 }

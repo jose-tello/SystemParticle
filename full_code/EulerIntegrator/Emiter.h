@@ -74,6 +74,7 @@ private:
 	float particlesPerFrame;
 
 	float particlesEmited;
+	int activeParticles;
 
 	bool randomizePosX;
 	bool randomizePosY;

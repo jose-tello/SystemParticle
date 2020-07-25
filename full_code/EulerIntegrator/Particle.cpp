@@ -90,12 +90,18 @@ void Particle::SetAngularSpeed(float aspd) {
 }
 
 
-void Particle::Update(float dt)
+bool Particle::Update(float dt)
 {
 	if (life > 0)
 	{
 		Move(dt);
 		CheckLife(dt);
+
+		if (life > 0)
+			return true;
+
+		else
+			return false;
 	}
 }
 
@@ -137,6 +143,12 @@ bool Particle::IsActive()
 }
 
 
+void Particle::Deactivate()
+{
+	life = 0.0f;
+}
+
+
 void Particle::Reset(float x, float y, float speedX, float speedY, float accX, float accY, float angSpeed, float lifeTime)
 {
 	life = lifeTime;
@@ -152,4 +164,17 @@ void Particle::Reset(float x, float y, float speedX, float speedY, float accX, f
 
 	angularSpeed = angSpeed;
 
+}
+
+
+void Particle::operator=(Particle p)
+{
+	position = p.position; 
+	speed = p.speed;
+	acceleration = p.acceleration;
+
+	angle = p.angle;
+	angularSpeed = p.angularSpeed;
+
+	life = p.life;
 }

@@ -31,12 +31,14 @@ public:
 	void SetAngularSpeed(float);
 
 	//the actual useful functions
-	void Update(float dt);
+	bool Update(float dt);
 	void GetDrawVariables(fMPoint &, float &, float &);
 	
 	bool IsActive();
+	void Deactivate();
 	void Reset(float x, float y, float speedX, float speedY, float accX, float accY, float angularSpeed, float lifeTime);
 
+	void operator=(Particle);
 private:
 	void Move(float dt);
 
