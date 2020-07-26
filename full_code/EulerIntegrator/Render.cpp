@@ -102,7 +102,7 @@ bool ModuleRender::IsInsideCamera(SDL_Rect element)
 
 
 // Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, Uint8 alpha, float speed, double angle, int pivot_x, int pivot_y)
+bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, Uint8 alpha, Uint8 r, Uint8 g, Uint8 b, float speed, double angle, int pivot_x, int pivot_y)
 {
 	bool ret = true;
 	SDL_Rect rect;
@@ -113,6 +113,11 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, U
 	{
 		SDL_SetTextureAlphaMod(texture, alpha);
 	}
+	if (r != 255 || b != 255 || g != 255)
+	{
+		SDL_SetTextureColorMod(texture, r, g, b);
+	}
+
 
 	if (section != NULL)
 	{
@@ -149,6 +154,11 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, U
 	if (alpha != 255)
 	{
 		SDL_SetTextureAlphaMod(texture, 255);
+	}
+
+	if (r != 255 || b != 255 || g != 255)
+	{
+		SDL_SetTextureColorMod(texture, 255, 255, 255);
 	}
 
 	return ret;

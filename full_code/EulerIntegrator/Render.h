@@ -18,7 +18,7 @@ public:
 
 	bool IsInsideCamera(SDL_Rect element);
 
-	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = NULL, Uint8 alpha = 255, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX); //prints everything on the screen
+	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = NULL, Uint8 alpha = 255, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, float speed = 1.0f, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX); //prints everything on the screen
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool use_camera = true); //Draws a rectangle
 	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true); //Draws a line
 	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true); //Draws a circle (not used)

@@ -15,11 +15,11 @@ class Emiter
 {
 public:
 	Emiter(fMPoint &position, fMPoint &particleSpeed, iMPoint &particleVariationSpeed, fMPoint &particleAcceleration, iMPoint& particleVariationAcceleration, 
-		   float particleAngularSpeed, int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade);
+		   float particleAngularSpeed, int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade, int r = 255, int g = 255, int b = 255);
 
 	Emiter(float positionX, float positionY, float particleSpeedX, float particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY, float particleAccelerationX,
 		   float particleAccelerationY, int particleVariationAccelerationX, int particleVariationAccelerationY, float particleAngularSpeed, int particleVariableAngularSpeed, 
-		   float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade);
+		   float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade, int r = 255, int g = 255, int b = 255);
 	
 	~Emiter();
 
@@ -88,6 +88,10 @@ private:
 	bool randomizeAngularSpeed;
 
 	bool fadeParticles;
+	bool fadeColor;
+	int rColor;
+	int gColor;
+	int bColor;
 
 	bool active;
 };

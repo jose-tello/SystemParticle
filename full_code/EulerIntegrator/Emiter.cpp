@@ -7,7 +7,7 @@
 
 Emiter::Emiter(fMPoint& position, fMPoint& particleSpeed, iMPoint& particleVariationSpeed, fMPoint& particleAcceleration,
 	iMPoint& particleVariationAcceleration, float particleAngularSpeed, int particleVariableAngularSpeed, float particlesRate,
-	float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade) :
+	float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade, int r, int g, int b) :
 
 
 	position(position),
@@ -38,6 +38,9 @@ Emiter::Emiter(fMPoint& position, fMPoint& particleSpeed, iMPoint& particleVaria
 
 	active(true),
 	fadeParticles(fade),
+	rColor(r),
+	gColor(g),
+	bColor(b),
 
 	particlesEmited(0.0f),
 	activeParticles(0)
@@ -48,7 +51,7 @@ Emiter::Emiter(fMPoint& position, fMPoint& particleSpeed, iMPoint& particleVaria
 
 Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float particleSpeedY, int particleVariationSpeedX, int particleVariationSpeedY,
 	float particleAccelerationX, float particleAccelerationY, int particleVariationAccelerationX, int particleVariationAccelerationY, float particleAngularSpeed,
-	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade) :
+	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade, int r, int g, int b) :
 
 	position{ positionX, positionY },
 	particleSpeed{ particleSpeedX, particleSpeedY },
@@ -78,6 +81,10 @@ Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float par
 
 	active(true),
 	fadeParticles(fade),
+	fadeColor(true),
+	rColor(r),
+	gColor(g),
+	bColor(b),
 
 	particlesEmited(0.0f),
 	activeParticles(0)
@@ -137,6 +144,9 @@ void Emiter::Start()
 
 	if (particleVariationAngularSpeed == 0)
 		randomizeAngularSpeed = false;
+
+	if (rColor == 255 && gColor == 255 && bColor == 255)
+		fadeColor = false;
 }
 
 
@@ -210,7 +220,7 @@ void Emiter::ThrowParticles() {
 			particleVector[i].Reset(GeneratePosX(), GeneratePosY(), GenerateSpeedX(), GenerateSpeedY(), GenerateAccelerationX(), GenerateAccelerationY(), GenerateAngularSpeed(), particlesLifeTime);
 			emited++;
 			activeParticles++;
-			
+
 			//If we activated the necesary particles this frame, break
 			if ((int)particlesEmited == emited)
 				break;
@@ -228,6 +238,11 @@ void Emiter::DrawParticles()
 	float lifeTime;
 	SDL_Rect rect;
 
+	Uint8 transparency = 255;
+	Uint8 r = 255;
+	Uint8 g = 255;
+	Uint8 b = 255;
+
 	for (int i = 0; i < activeParticles; i++)
 	{
 		particleVector[i].GetDrawVariables(pos, angle, lifeTime);
@@ -239,12 +254,29 @@ void Emiter::DrawParticles()
 
 			if (fadeParticles == true)
 			{
-				Uint8 transparency = lifeTime / particlesLifeTime * 255;
-				App->renderer->Blit(particleTexture, pos.x, pos.y, &rect, transparency, 0, angle);
+				transparency = lifeTime / particlesLifeTime * 255;
 			}
 
-			else
-				App->renderer->Blit(particleTexture, pos.x, pos.y, &rect, 255, 0, angle);
+			if (fadeColor == true)
+			{
+				r = lifeTime / particlesLifeTime * 255;
+
+				g = lifeTime / particlesLifeTime * 255;
+
+				b = lifeTime / particlesLifeTime * 255;
+
+				if (r < rColor)
+					r = rColor;
+
+				if (g < gColor)
+					g = gColor;
+
+				if (b < bColor)
+					b = bColor;
+			}
+
+
+			App->renderer->Blit(particleTexture, pos.x, pos.y, &rect, transparency, r, g, b, 0, angle);
 		}
 	}
 }
