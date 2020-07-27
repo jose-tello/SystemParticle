@@ -176,10 +176,6 @@ void Particle::Move(float dt)
 
 	//TODO 1
 	//Do the same with position and angles
-	position[0] += speed[0] * dt * TIME_CONST;
-	position[1] += speed[1] * dt * TIME_CONST;
-
-	angle += angularSpeed * dt * TIME_CONST;
 }
 
  

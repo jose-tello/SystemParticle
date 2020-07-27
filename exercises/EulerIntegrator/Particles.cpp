@@ -33,7 +33,7 @@ bool ModuleParticles::Start()
 
 	//TODO 5
 	//Uncomment this :D
-	rect = { 0, 0, 10, 400 };
+	/*rect = { 0, 0, 10, 400 };
 
 	rect2 = { 0, 0, 550, 10 };
 
@@ -63,7 +63,7 @@ bool ModuleParticles::Start()
 
 	particleSystem->PushEmiter(emiterBigSnowBall2);
 	particleSystem->PushEmiter(emiterMidSnowBall2);
-	particleSystem->PushEmiter(emiterLittleSnowBall2);
+	particleSystem->PushEmiter(emiterLittleSnowBall2);*/
 
 	return true;
 }
