@@ -51,13 +51,13 @@ bool ModuleParticles::Start()
 	Animation anim3;
 	anim3.PushBack(SDL_Rect{ 7, 11, 8, 8 }, 1, 0, 0);
 
-	Emiter emiterBigSnowBall   (0, 20, 2, 2, 2, -3, 0, 0, 0, 1, 5, 0, 600, 3.5, &rect, snowball, anim1, true, 100, 100, 160);
-	Emiter emiterMidSnowBall   (0, 20, 2, 2, 3, -2, 0, 0, 0, 1, 5, 0, 80, 3.5, &rect, snowball, anim1, true, 100, 100, 160);
-	Emiter emiterLittleSnowBall(0, 20, 3, 2, 3, -2, 0, 0, 0, 1, 5, 0, 80, 3.5, &rect, snowball, anim1, true, 100, 100, 160);
+	Emiter emiterBigSnowBall   (0, 20, 2, 2, 2, -3, 0, 0, 0, 1, 5, 0, 750, 3.5, &rect, snowball, anim1, true, 100, 100, 160);
+	Emiter emiterMidSnowBall   (0, 20, 2, 2, 3, -2, 0, 0, 0, 1, 5, 0, 750, 3.5, &rect, snowball, anim1, true, 100, 100, 160);
+	Emiter emiterLittleSnowBall(0, 20, 3, 2, 3, -2, 0, 0, 0, 1, 5, 0, 750, 3.5, &rect, snowball, anim1, true, 100, 100, 160);
 
-	Emiter emiterBigSnowBall2   (20, 0, 2, 2, 2, -3, 0, 0, 0, 1, 5, 0, 600, 3.5, &rect2, snowball, anim1, true, 100, 100, 160);
-	Emiter emiterMidSnowBall2   (20, 0, 2, 2, 3, -2, 0, 0, 0, 1, 5, 0, 80, 3.5, &rect2, snowball, anim1, true, 100, 100, 160);
-	Emiter emiterLittleSnowBall2(20, 0, 3, 2, 3, -2, 0, 0, 0, 1, 5, 0, 80, 3.5, &rect2, snowball, anim1, true, 100, 100, 160);
+	Emiter emiterBigSnowBall2   (20, 0, 2, 2, 2, -3, 0, 0, 0, 1, 5, 0, 750, 3.5, &rect2, snowball, anim1, true, 100, 100, 160);
+	Emiter emiterMidSnowBall2   (20, 0, 2, 2, 3, -2, 0, 0, 0, 1, 5, 0, 750, 3.5, &rect2, snowball, anim1, true, 100, 100, 160);
+	Emiter emiterLittleSnowBall2(20, 0, 3, 2, 3, -2, 0, 0, 0, 1, 5, 0, 750, 3.5, &rect2, snowball, anim1, true, 100, 100, 160);
 	
 	particleSystem->PushEmiter(emiterBigSnowBall);
 	particleSystem->PushEmiter(emiterMidSnowBall);

@@ -69,6 +69,9 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Resource Files\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="EmiterState.cpp">
+      <Filter>ParticleSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="Frame.h">
       <Filter>Resource Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="EmiterState.h">
+      <Filter>ParticleSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
