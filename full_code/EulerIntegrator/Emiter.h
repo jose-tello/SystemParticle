@@ -4,7 +4,6 @@
 #include "vector"
 #include "p2Point.h"
 #include "Animation.h"
-#include "EmiterState.h"
 
 #define FPS 60
 #define MSPF 16
@@ -36,21 +35,63 @@ public:
 private:
 	void Start();
 
+	void CreateParticle();
 	void ThrowParticles();
 	void DrawParticles();
 
+	//Generate functions, used in ThrowParticles
+	float GeneratePosX();
+	float GeneratePosY();
+
+	float GenerateSpeedX();
+	float GenerateSpeedY();
+	
+	float GenerateAccelerationX();
+	float GenerateAccelerationY();
+
+	float GenerateAngularSpeed();
+
 private:
 	fMPoint position;
+	fMPoint particleSpeed;
+	fMPoint particleAcceleration;
+
+	float particleAngularSpeed;
+
+	iMPoint particleVariationSpeed;
+	iMPoint particleVariationAcceleration;
+	int particleVariationAngularSpeed;
+
 
 	std::vector<Particle> particleVector;
 
+	SDL_Rect *areaOfSpawn; //Optional
 	SDL_Texture* particleTexture;
 	Animation particleAnimation;
+
+	float particlesRate; //per second
+	float particlesLifeTime;
+	float particlesPerFrame;
 
 	float particlesEmited;
 	int activeParticles;
 
-	EmiterState state;
+	bool randomizePosX;
+	bool randomizePosY;
+
+	bool randomizeSpeedX;
+	bool randomizeSpeedY;
+
+	bool randomizeAccelerationX;
+	bool randomizeAccelerationY;
+
+	bool randomizeAngularSpeed;
+
+	bool fadeParticles;
+	bool fadeColor;
+	int rColor;
+	int gColor;
+	int bColor;
 
 	bool active;
 };

@@ -9,14 +9,38 @@ Emiter::Emiter(fMPoint& position, fMPoint& particleSpeed, iMPoint& particleVaria
 	iMPoint& particleVariationAcceleration, float particleAngularSpeed, int particleVariableAngularSpeed, float particlesRate,
 	float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade, int r, int g, int b) :
 
-	state(particleSpeed, particleAcceleration, particleAngularSpeed, particlesRate, particlesLifeTime, areaOfSpawn, particleVariationSpeed, particleVariationAcceleration, particleVariableAngularSpeed, fade, r, g, b),
-	
-	position(position),
 
+	position(position),
+	particleSpeed(particleSpeed),
+	particleVariationSpeed(particleVariationSpeed),
+	particleAcceleration(particleAcceleration),
+	particleVariationAcceleration(particleVariationAcceleration),
+	particleAngularSpeed(particleAngularSpeed),
+	particleVariationAngularSpeed(particleVariableAngularSpeed),
+
+	particlesRate(particlesRate),
+	particlesLifeTime(particlesLifeTime),
+
+	areaOfSpawn(areaOfSpawn),
 	particleTexture(texture),
 	particleAnimation(particleAnimation),
 
+	randomizePosX(true),
+	randomizePosY(true),
+
+	randomizeSpeedX(true),
+	randomizeSpeedY(true),
+
+	randomizeAccelerationX(true),
+	randomizeAccelerationY(true),
+
+	randomizeAngularSpeed(true),
+
 	active(true),
+	fadeParticles(fade),
+	rColor(r),
+	gColor(g),
+	bColor(b),
 
 	particlesEmited(0.0f),
 	activeParticles(0)
@@ -29,16 +53,39 @@ Emiter::Emiter(float positionX, float positionY, float particleSpeedX, float par
 	float particleAccelerationX, float particleAccelerationY, int particleVariationAccelerationX, int particleVariationAccelerationY, float particleAngularSpeed,
 	int particleVariableAngularSpeed, float particlesRate, float particlesLifeTime, SDL_Rect* areaOfSpawn, SDL_Texture* texture, Animation particleAnimation, bool fade, int r, int g, int b) :
 
-	state(fMPoint(particleSpeedX, particleSpeedY), fMPoint(particleAccelerationX, particleAccelerationY), particleAngularSpeed, particlesRate, particlesLifeTime, 
-		  areaOfSpawn, iMPoint(particleVariationSpeedX, particleVariationSpeedY), iMPoint(particleVariationAccelerationX, particleVariationAccelerationY), particleVariableAngularSpeed, fade, r, g, b),
-
 	position{ positionX, positionY },
+	particleSpeed{ particleSpeedX, particleSpeedY },
+	particleVariationSpeed{ particleVariationSpeedX, particleVariationSpeedY },
+	particleAcceleration{ particleAccelerationX, particleAccelerationY },
+	particleVariationAcceleration{ particleVariationAccelerationX, particleVariationAccelerationY },
+	particleAngularSpeed(particleAngularSpeed),
+	particleVariationAngularSpeed(particleVariableAngularSpeed),
 
+	particlesRate(particlesRate),
+	particlesLifeTime(particlesLifeTime),
+
+	areaOfSpawn(areaOfSpawn),
 	particleTexture(texture),
 	particleAnimation(particleAnimation),
 
+	randomizePosX(true),
+	randomizePosY(true),
+
+	randomizeSpeedX(true),
+	randomizeSpeedY(true),
+
+	randomizeAccelerationX(true),
+	randomizeAccelerationY(true),
+
+	randomizeAngularSpeed(true),
+
 	active(true),
-	
+	fadeParticles(fade),
+	fadeColor(true),
+	rColor(r),
+	gColor(g),
+	bColor(b),
+
 	particlesEmited(0.0f),
 	activeParticles(0)
 {
@@ -50,14 +97,62 @@ void Emiter::Start()
 {
 	//TODO 3: Just calculate the max number of particles you will have in screen
 	//particles rate * particles life time
-	int maxParticles = state.GetParticlesRate() * state.GetParticlesLifeTime() + 1;
+	int maxParticles = particlesRate * particlesLifeTime + 1;
+
+	//We assume that the game will allways go at 60 FPS
+	particlesPerFrame = particlesRate * 16 / 1000;
 
 	particleVector.reserve(maxParticles);
 
 	for (int i = 0; i < maxParticles; i++)
 	{
-		particleVector.push_back(Particle());
+		CreateParticle();
 	}
+
+	//Set all the bools to check what variables will be randomized in the Generate() functions
+	if (areaOfSpawn == nullptr)
+	{
+		randomizePosX = false;
+		randomizePosY = false;
+	}
+
+	else
+	{
+		if (areaOfSpawn->w == 0)
+		{
+			randomizePosX = false;
+		}
+
+		if (areaOfSpawn->h == 0)
+		{
+			randomizePosY = false;
+		}
+	}
+
+
+	if (particleVariationSpeed.x == NULL)
+		randomizeSpeedX = false;
+
+	if (particleVariationSpeed.y == NULL)
+		randomizeSpeedY = false;
+
+	if (particleVariationAcceleration.x == NULL)
+		randomizeAccelerationX = false;
+
+	if (particleVariationAcceleration.y == NULL)
+		randomizeAccelerationY = false;
+
+	if (particleVariationAngularSpeed == 0)
+		randomizeAngularSpeed = false;
+
+	if (rColor == 255 && gColor == 255 && bColor == 255)
+		fadeColor = false;
+}
+
+
+void Emiter::CreateParticle()
+{
+	particleVector.push_back(Particle());
 }
 
 
@@ -65,6 +160,7 @@ Emiter::~Emiter()
 {
 	particleVector.clear();
 
+	areaOfSpawn = nullptr;
 	particleTexture = nullptr;
 }
 
@@ -109,7 +205,7 @@ void Emiter::Activate()
 void Emiter::ThrowParticles() {
 
 	//You could use delta time instead of particlesPerFrame, but i dont recommend it
-	particlesEmited += state.GetParticlesPerFrame();
+	particlesEmited += particlesPerFrame;
 
 	if (particlesEmited >= 1)
 	{
@@ -120,11 +216,8 @@ void Emiter::ThrowParticles() {
 		{
 			//TODO 2: Call Activate(), use Generate...() functions to get the parameters Activate() needs.
 			//Activate returns false if the particle is already active, and true if we activate it.
-			float posX, posY, spdX, spdY, accX, accY, aspd;
 
-			state.GenerateValues(position, posX, posY, spdX, spdY, accX, accY, aspd);
-
-			particleVector[i].Reset(posX, posY, spdX, spdY, accX, accY, aspd, state.GetParticlesLifeTime());
+			particleVector[i].Reset(GeneratePosX(), GeneratePosY(), GenerateSpeedX(), GenerateSpeedY(), GenerateAccelerationX(), GenerateAccelerationY(), GenerateAngularSpeed(), particlesLifeTime);
 			emited++;
 			activeParticles++;
 
@@ -149,44 +242,135 @@ void Emiter::DrawParticles()
 	Uint8 r = 255;
 	Uint8 g = 255;
 	Uint8 b = 255;
-	float maxLife = state.GetParticlesLifeTime();
 
 	for (int i = 0; i < activeParticles; i++)
 	{
 		particleVector[i].GetDrawVariables(pos, angle, lifeTime);
-		rect = particleAnimation.GetFrameBox(state.GetParticlesLifeTime() - lifeTime);
+		rect = particleAnimation.GetFrameBox(particlesLifeTime - lifeTime);
 
 		if (App->renderer->IsInsideCamera(rect))
 		{
 			particleVector[i].GetDrawVariables(pos, angle, lifeTime);
 
-			if (state.fadeParticles == true)
+			if (fadeParticles == true)
 			{
-				transparency = lifeTime / maxLife * 255;
+				transparency = lifeTime / particlesLifeTime * 255;
 			}
 
-			if (state.fadeColor == true)
+			if (fadeColor == true)
 			{
-				r = lifeTime / maxLife * 255;
+				r = lifeTime / particlesLifeTime * 255;
 
-				g = lifeTime / maxLife * 255;
+				g = lifeTime / particlesLifeTime * 255;
 
-				b = lifeTime / maxLife * 255;
+				b = lifeTime / particlesLifeTime * 255;
 
-				if (r < state.rColor)
-					r = state.rColor;
+				if (r < rColor)
+					r = rColor;
 
-				if (g < state.gColor)
-					g = state.gColor;
+				if (g < gColor)
+					g = gColor;
 
-				if (b < state.bColor)
-					b = state.bColor;
+				if (b < bColor)
+					b = bColor;
 			}
 
 
 			App->renderer->Blit(particleTexture, pos.x, pos.y, &rect, transparency, r, g, b, 0, angle);
 		}
 	}
+}
+
+
+float Emiter::GeneratePosX()
+{
+	if (randomizePosX == true)
+	{
+		float x = (rand() % areaOfSpawn->w) + position.x;
+		return x;
+	}
+
+	else
+		return position.x;
+}
+
+
+float Emiter::GeneratePosY()
+{
+	if (randomizePosY == true)
+	{
+		float y = (rand() % areaOfSpawn->h) + position.y;
+		return y;
+	}
+
+	else
+		return position.y;
+}
+
+
+float Emiter::GenerateSpeedX()
+{
+	if (randomizeSpeedX == true)
+	{
+		float speedX = (rand() % particleVariationSpeed.x) + particleSpeed.x;
+		return speedX;
+	}
+
+	else
+		return particleSpeed.x;
+}
+
+
+float Emiter::GenerateSpeedY()
+{
+	if (randomizeSpeedY == true)
+	{
+		float speedY = (rand() % particleVariationSpeed.y) + particleSpeed.y;
+		return speedY;
+	}
+
+	else
+		return particleSpeed.y;
+
+}
+
+
+float Emiter::GenerateAccelerationX()
+{
+	if (randomizeAccelerationX == true)
+	{
+		float accX = (rand() % particleVariationAcceleration.x) + particleAcceleration.x;
+		return accX;
+	}
+
+	else
+		return particleAcceleration.x;
+}
+
+
+float Emiter::GenerateAccelerationY()
+{
+	if (randomizeAccelerationY == true)
+	{
+		float accY = (rand() % particleVariationAcceleration.y) + particleAcceleration.y;
+		return accY;
+	}
+
+	else
+		return particleAcceleration.y;
+}
+
+
+float Emiter::GenerateAngularSpeed()
+{
+	if (randomizeAngularSpeed == true)
+	{
+		float angularSpeed = (rand() % particleVariationAngularSpeed) + particleAngularSpeed;
+		return angularSpeed;
+	}
+
+	else
+		return particleAngularSpeed;
 }
 
 
